@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  #  broker-drone-monitor:
+  #    container_name: broker-drone-monitor
+  #    restart: always
+  #    depends_on:
+  #      - broker-drone-monitor-db
+  #    build:
+  #      context: .
+  #    ports:
+  #      - "8000:8000"
+  #    environment:
+  #      MONGODB_HOST: drone-host
+
+  broker-drone-monitor-db:
+    image: mongo
+    container_name: broker-drone-monitor-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: admin
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongodb_server_data:/data/db
+      #- ./mongodb_cci_fiap/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      #- $PWD/docker/run/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    networks:
+      - drone-network
+
+networks:
+  drone-network:
+    driver: bridge
+volumes:
+  mongodb_server_data:
