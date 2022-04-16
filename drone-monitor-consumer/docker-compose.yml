@@ -2,18 +2,6 @@ version: '3.8'
 
 services:
 
-  #  broker-drone-monitor:
-  #    container_name: broker-drone-monitor
-  #    restart: always
-  #    depends_on:
-  #      - broker-drone-monitor-db
-  #    build:
-  #      context: .
-  #    ports:
-  #      - "8000:8000"
-  #    environment:
-  #      MONGODB_HOST: drone-host
-
   broker-drone-monitor-db:
     image: mongo
     container_name: broker-drone-monitor-db

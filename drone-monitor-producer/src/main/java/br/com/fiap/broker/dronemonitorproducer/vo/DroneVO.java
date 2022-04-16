@@ -10,11 +10,21 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class DroneVO {
-    private long droneId;
+    private int id;
     private String name;
     private BigDecimal latitude;
     private BigDecimal longitude;
     private BigDecimal temperature;
     private BigDecimal humidity;
-    private boolean rastreability;
+
+    public String toString() {
+        return "DroneVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", temperature=" + temperature +
+                ", humidity=" + humidity +
+                '}';
+    }
 }

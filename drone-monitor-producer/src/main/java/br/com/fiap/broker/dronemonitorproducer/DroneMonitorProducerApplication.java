@@ -1,11 +1,10 @@
 package br.com.fiap.broker.dronemonitorproducer;
 
-import br.com.fiap.broker.dronemonitorproducer.job.SchedulerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
+import org.springframework.kafka.annotation.EnableKafka;
 
-@Import({ SchedulerConfig.class })
+@EnableKafka
 @SpringBootApplication
 public class DroneMonitorProducerApplication {
 

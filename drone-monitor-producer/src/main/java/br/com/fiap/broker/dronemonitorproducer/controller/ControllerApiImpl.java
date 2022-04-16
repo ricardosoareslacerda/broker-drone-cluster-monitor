@@ -1,22 +1,24 @@
 package br.com.fiap.broker.dronemonitorproducer.controller;
 
-import br.com.fiap.broker.dronemonitorproducer.services.DroneService;
+import br.com.fiap.broker.dronemonitorproducer.services.DroneProducerService;
 import br.com.fiap.broker.dronemonitorproducer.vo.DroneVO;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
+@RequestMapping(value = "/api/v1/drones-monitor/drones")
 public class ControllerApiImpl implements Api {
 
-    private DroneService droneService;
+    private final DroneProducerService droneProducerService;
 
-    @PutMapping("register")
+    @PutMapping(value = "register/{id}")
     @Override
-    public void registerDrone(final DroneVO drone) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerDrone(@PathVariable int id, @RequestBody final DroneVO drone) {
         try {
-            this.droneService.registerDrone(drone);
+            this.droneProducerService.registerDrone(drone);
         }
         catch (Exception e) {
             e.printStackTrace();
