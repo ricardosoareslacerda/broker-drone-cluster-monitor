@@ -15,13 +15,13 @@ public class DroneProducerServiceImpl implements DroneProducerService {
     @Value("${topic.name.producer}")
     private String topic;
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
-    public void registerDrone(final DroneVO dronevO) throws Exception {
+    public void registerDrone(final DroneVO dronevO) {
         try {
             log.info("Sending drone to kafka: {}", dronevO);
-            kafkaTemplate.send(topic, dronevO.toString());
+            kafkaTemplate.send(topic, dronevO);
         }
         catch (Exception e) {
             log.error("Error sending drone to kafka: {}", dronevO, e);

@@ -31,6 +31,7 @@ Avaliação Integrations Tools
 ---------------------------------------------------------------------------
 	- listener
 		recebe dados drone
+		id, dronevo
 	- business
 		- logar
 		- validar dados drone
@@ -41,3 +42,7 @@ Avaliação Integrations Tools
 		- enviar e-mail
 		- sendMail
 			- getTemplateMail
+
+---------------------------------------------------------------------------
+- validar Ativar rastreamento (ligada-desliga)
+	- (Job)

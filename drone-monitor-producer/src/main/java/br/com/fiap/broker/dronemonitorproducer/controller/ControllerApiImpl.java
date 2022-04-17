@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/v1/drones-monitor/drones")
+@RequestMapping(value = "/drones")
 public class ControllerApiImpl implements Api {
 
     private final DroneProducerService droneProducerService;
@@ -16,7 +16,7 @@ public class ControllerApiImpl implements Api {
     @PutMapping(value = "register/{id}")
     @Override
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerDrone(@PathVariable int id, @RequestBody final DroneVO drone) {
+    public void registerDrone(@PathVariable final int id, @RequestBody final DroneVO drone) {
         try {
             this.droneProducerService.registerDrone(drone);
         }
