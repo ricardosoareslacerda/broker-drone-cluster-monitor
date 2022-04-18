@@ -44,5 +44,5 @@ Avaliação Integrations Tools
 			- getTemplateMail
 
 ---------------------------------------------------------------------------
-- validar Ativar rastreamento (ligada-desliga)
-	- (Job)
+- criar read-me
+	- copiar do projeto anterior

@@ -1,26 +1,31 @@
 package br.com.fiap.broker.dronemonitorconsumer.consumer;
 
+import br.com.fiap.broker.dronemonitorconsumer.business.DroneBusiness;
+import br.com.fiap.broker.dronemonitorconsumer.parser.JsonCustomParser;
 import br.com.fiap.broker.dronemonitorconsumer.vo.DroneVO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.handler.annotation.Headers;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
+@RequiredArgsConstructor
+@Service
 public class DroneConsumer {
 
-    /*@KafkaListener(topics = "${topic.name.consumer}", groupId = "drone_group")
-    public void consume(ConsumerRecord<String, DroneVO> payload) {
-        log.info("Topico: {}", payload.topic());
-        log.info("Key: {}", payload.key());
-        log.info("Headers: {}", payload.headers());
-        log.info("Partition: {}", payload.partition());
-        log.info("Value: {}", payload.value());
-    }*/
+    private final DroneBusiness droneBusiness;
 
     @KafkaListener(topics = "${topic.name.consumer}", groupId = "${group.name.consumer}", containerFactory = "jsonKafkaListenerContainerFactory")
-    public void consume(final DroneVO payload) {
+    public void consume(@Payload DroneVO payload, @Headers MessageHeaders headers) {
 
-        log.info("Value: {}", payload.toString());
+        headers.keySet().forEach(key -> {
+            log.info("{}: {}", key, headers.get(key));
+        });
+
+        log.info("Consumer Drone: {} ", JsonCustomParser.parseObjectToJson(DroneVO.class, payload));
+        droneBusiness.verifyDrone(payload);
     }
 }

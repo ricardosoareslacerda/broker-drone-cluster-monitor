@@ -10,7 +10,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
 public class DroneVO {
+
     private String id;
     private String name;
     private BigDecimal latitude;
@@ -18,5 +20,5 @@ public class DroneVO {
     private BigDecimal temperature;
     private BigDecimal humidity;
     private boolean rastreability;
-    private Date timestamp;
+    private Date lastUpdate;
 }

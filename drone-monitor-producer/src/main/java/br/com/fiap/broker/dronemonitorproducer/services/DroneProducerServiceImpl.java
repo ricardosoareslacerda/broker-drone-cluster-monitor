@@ -1,5 +1,7 @@
 package br.com.fiap.broker.dronemonitorproducer.services;
 
+import br.com.fiap.broker.dronemonitorproducer.business.DroneBusiness;
+import br.com.fiap.broker.dronemonitorproducer.parser.JsonCustomParser;
 import br.com.fiap.broker.dronemonitorproducer.vo.DroneVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,21 +14,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class DroneProducerServiceImpl implements DroneProducerService {
 
+    private final DroneBusiness droneBusiness;
+
     @Value("${topic.name.producer}")
     private String topic;
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
-    public void registerDrone(final DroneVO dronevO) {
+    public void registerDrone(final DroneVO droneVO) {
         try {
-            log.info("Sending drone to kafka: {}", dronevO);
-            kafkaTemplate.send(topic, dronevO);
+
+            log.info("Verify drone: {}", droneVO);
+            droneBusiness.verifyDrone(droneVO);
+
+            log.info("Sending drone to kafka: {}", droneVO);
+            kafkaTemplate.send(topic, droneVO);
         }
         catch (Exception e) {
-            log.error("Error sending drone to kafka: {}", dronevO, e);
+            log.error("Error sending drone to kafka: {}", droneVO, e);
         }
 
-        System.out.println("Registering drone: " + dronevO.getId());
+        log.info("Producer Drone: {} ", JsonCustomParser.parseObjectToJson(DroneVO.class, droneVO));
     }
 }

@@ -30,6 +30,7 @@ public class ConsumerKafkaConfig {
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configs.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        configs.put(ConsumerConfig.ALLOW_AUTO_CREATE_TOPICS_CONFIG, true);
         return new DefaultKafkaConsumerFactory<>(configs);
     }
 
@@ -38,8 +39,6 @@ public class ConsumerKafkaConfig {
         var factory = new ConcurrentKafkaListenerContainerFactory();
         factory.setConsumerFactory(jsonConsumerFactory());
         factory.setMessageConverter(new JsonMessageConverter());
-        //factory.setMessageConverter(new BatchMessagingMessageConverter(new JsonMessageConverter()));
-        //factory.setBatchListener(true);
         return factory;
     }
 }

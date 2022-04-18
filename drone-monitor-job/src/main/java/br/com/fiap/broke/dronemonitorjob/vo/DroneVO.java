@@ -1,9 +1,8 @@
-package br.com.fiap.broker.dronemonitorproducer.vo;
+package br.com.fiap.broke.dronemonitorjob.vo;
 
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -15,10 +14,10 @@ public class DroneVO {
 
     private String id;
     private String name;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+    private Float latitude;
+    private Float longitude;
     private BigDecimal temperature;
     private BigDecimal humidity;
     private boolean rastreability;
-    private Date lastUpdate;
+    private String lastUpdate;
 }
