@@ -1,4 +1,4 @@
-<h1>Desenvolvimento de um Sistema de Cartáo de Crédito - FIAP</h1> 
+<h1>Monitoramento de Informações de Drones - FIAP</h1> 
 
 <p align="center">
   <img src="http://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge"/>
@@ -39,7 +39,7 @@ Insira os tópicos do README em links para facilitar a navegação do leitor
 
 ## Funcionalidades
 
-##### :heavy_check_mark: **Gerenciamento de cartões de crédito**
+##### :heavy_check_mark: **Monitoramento de Informações enviadas de Drones**
 - ###### Monitoramento de Informações enviadas de Drones
 
   - ###### Seleção de drones para recuperar informações
