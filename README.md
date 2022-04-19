@@ -66,11 +66,13 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 
 
 
-## Layout ou Deploy da Aplicação :dash:
+## Vídeo-1 Apresentação da Aplicação :dash:
 
-```* Link em vídeo-1 da aplicação rodando. https://www.loom.com/share/2cbb9686bbc442de93fa1f238a52d546```
+> Link em vídeo da aplicação rodando. https://www.loom.com/share/2cbb9686bbc442de93fa1f238a52d546
 
-```* Link em vídeo-2 da aplicação rodando.  https://www.loom.com/sharite/1605329bd5e54e60915623a4a59367d5```
+## Vídeo-2 Apresentação da Aplicação :dash:
+
+> Link em vídeo-2 da aplicação rodando.  https://www.loom.com/share/1605329bd5e54e60915623a4a59367d5
 
 ## Como rodar a aplicação :arrow_forward:
 
