@@ -26,7 +26,8 @@ public class DroneProducerServiceImpl implements DroneProducerService {
         try {
 
             log.info("Verify drone: {}", droneVO);
-            droneBusiness.verifyDrone(droneVO);
+            if(droneBusiness.isNotPermitionToSendDrone(droneVO))
+                return;
 
             log.info("Sending drone to kafka: {}", droneVO);
             kafkaTemplate.send(topic, droneVO);

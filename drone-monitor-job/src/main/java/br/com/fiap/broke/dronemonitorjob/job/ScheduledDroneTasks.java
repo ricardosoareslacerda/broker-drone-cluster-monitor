@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 @Slf4j
 @Component
@@ -56,12 +57,24 @@ public class ScheduledDroneTasks {
         DroneVO droneVO = DroneVO.builder().
                                         id(droneId).
                                         name(droneName).
-                                        latitude(-23.5F).
-                                        longitude(-46.6F).
-                                        humidity(new BigDecimal(Math.random() * 100)).
-                                        temperature(new BigDecimal(Math.random() * 100)).
-                                        rastreability(true).
+                                        latitude(this.getRandomValuesBetween(-100F, 100F)).
+                                        longitude(this.getRandomValuesBetween(-100F, 100F)).
+                                        temperature(this.getRandomValuesBetween(-25L, 40L)).
+                                        humidity(this.getRandomValuesBetween(0L, 100L)).
+                                        rastreability(getRandomValuesBetween()).
                                         lastUpdate(LocalDateTime.now().atZone(ZoneId.of("America/Sao_Paulo")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"))).build();
         return droneVO;
+    }
+
+    private long getRandomValuesBetween(long min, long max) {
+        return (long) ((Math.random() * (max - min)) + min);
+    }
+
+    private float getRandomValuesBetween(float min, float max) {
+        return (float) ((Math.random() * (max - min)) + min);
+    }
+
+    private boolean getRandomValuesBetween() {
+        return new Random().nextBoolean();
     }
 }

@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class DroneBusiness {
 
-    public void verifyDrone(final DroneVO droneVO) {
+    public boolean isNotPermitionToSendDrone(final DroneVO droneVO) {
         if (!droneVO.isRastreability()) {
-
             log.error("Drone {} is not rastreability!", droneVO);
+            return true;
         }
+        return false;
     }
 }

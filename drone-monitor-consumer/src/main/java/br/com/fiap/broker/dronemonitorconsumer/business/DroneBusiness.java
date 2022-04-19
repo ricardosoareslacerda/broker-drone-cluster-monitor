@@ -47,10 +47,10 @@ public class DroneBusiness {
     public void verifyDrone(final DroneVO droneVO) {
         this.setMapDronesTimes(droneVO.getId());
 
-        boolean isValidTemperature = ((droneVO.getTemperature().compareTo(BigDecimal.valueOf(35.0)) >= 0)
-                                            || (droneVO.getTemperature().compareTo(BigDecimal.valueOf(0.0)) <= 0));
-        boolean isValidHumidity = (droneVO.getHumidity().compareTo(BigDecimal.valueOf(15.0)) <= 0);
-        if (isValidTemperature || isValidHumidity) {
+        boolean isInValidTemperature = ((Long.valueOf(droneVO.getTemperature()).compareTo(35L) >= 0)
+                                            || (Long.valueOf(droneVO.getTemperature()).compareTo(0L) <= 0));
+        boolean isInValidHumidity = (Long.valueOf(droneVO.getHumidity()).compareTo(15L) <= 0);
+        if (isInValidTemperature || isInValidHumidity) {
 
             log.warn("Drone " + droneVO.getId() + " is down");
 

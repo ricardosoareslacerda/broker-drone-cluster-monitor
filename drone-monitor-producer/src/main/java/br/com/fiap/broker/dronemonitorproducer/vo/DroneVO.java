@@ -17,8 +17,8 @@ public class DroneVO {
     private String name;
     private BigDecimal latitude;
     private BigDecimal longitude;
-    private BigDecimal temperature;
-    private BigDecimal humidity;
+    private long temperature;
+    private long humidity;
     private boolean rastreability;
     private Date lastUpdate;
 }

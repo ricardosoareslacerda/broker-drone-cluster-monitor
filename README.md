@@ -68,7 +68,9 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 
 ## Layout ou Deploy da Aplicação :dash:
 
-> Link em vídeo da aplicação rodando. https://www.loom.com/share/2cbb9686bbc442de93fa1f238a52d546
+```* Link em vídeo-1 da aplicação rodando. https://www.loom.com/share/2cbb9686bbc442de93fa1f238a52d546```
+
+```* Link em vídeo-2 da aplicação rodando.  https://www.loom.com/sharite/1605329bd5e54e60915623a4a59367d5```
 
 ## Como rodar a aplicação :arrow_forward:
 
@@ -78,8 +80,6 @@ No terminal, clone o projeto:
 git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git
 ```
 
-...
-
 - [Instalar o JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
 - [Instalar o Intellij](https://www.jetbrains.com/idea/download/#download-section)
 - Baixar o projeto do git [git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git]
@@ -88,7 +88,10 @@ git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git
   - docker-compose up (na raiz do projeto)
   - aguardar a instalação do server (Zookeeper/Kafka)
 - Iniciar a ide Intellij
-- Iniciar os projetos:
+- Abrir o projeto no Intellij
+- Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail no arquivo de properties do projeto. 
+```  drone-monitor-consumer -> src\main\resources -> application.properties - mail.sender.toAddresses```
+- Executar os projetos no Intellij:
   * **drone-monitor-producer**
   * **drone-monitor-consumer**
   * **drone-monitor-job**
