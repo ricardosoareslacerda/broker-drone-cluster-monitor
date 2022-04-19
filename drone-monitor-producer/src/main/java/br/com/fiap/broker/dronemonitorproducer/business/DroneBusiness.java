@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class DroneBusiness {
 
     public void verifyDrone(final DroneVO droneVO) {
-        if (droneVO.isRastreability()) {
+        if (!droneVO.isRastreability()) {
 
             log.error("Drone {} is not rastreability!", droneVO);
         }
