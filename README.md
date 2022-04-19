@@ -97,7 +97,7 @@ git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git
 
 Liste o time responsável pelo desenvolvimento do projeto
 
-| [<br><sub>Ricardo Lacerda</sub>](https://github.com/ricardosoareslacerda) || [<br><sub>Marcos Porto</sub>](https://github.com/maporto) |  [<br><sub>Juscelino Carvalho</sub>](https://github.com/JuscelinoCarvalho) |  [<br><sub>Gabriel Batalha</sub>]() |
+| [<br><sub>Ricardo Lacerda</sub>](https://github.com/ricardosoareslacerda) | [<br><sub>Marcos Porto</sub>](https://github.com/maporto) |  [<br><sub>Juscelino Carvalho</sub>](https://github.com/JuscelinoCarvalho) |  [<br><sub>Gabriel Batalha</sub>]() |
 | :---: | :---: | :---: 
 
 ## Licença
