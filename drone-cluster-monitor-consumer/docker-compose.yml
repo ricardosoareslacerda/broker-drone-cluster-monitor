@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
 
-  broker-drone-monitor-db:
+  broker-cluster-drone-monitor-db:
     image: mongo
     container_name: broker-drone-monitor-db
     restart: always

@@ -9,7 +9,7 @@ Container & Virtualization
 	- temperatura >= 35 ou <= 0
 	- umidade <= 15%
 
-- drone-monitor-job
+- drone-cluster-monitor-job
 ---------------------------------------------------------------------------
 	- DroneScheduller
 		- cron-scheduller de 10/10s 
@@ -21,14 +21,14 @@ Container & Virtualization
 	- DroneServices
 		- envia para o serviço rest
 	
-- drone-monitor-producer
+- drone-cluster-monitor-producer
 ---------------------------------------------------------------------------
 	- controller
 		- recebe dados drone
 	- producer
 		- envia para o topico
 		
-- drone-monitor-consumer
+- drone-cluster-monitor-consumer
 ---------------------------------------------------------------------------
 	- listener
 		recebe dados drone

@@ -35,4 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
-drone-monitor-consumer/build.gradle
+drone-cluster-monitor-consumer/build.gradle
