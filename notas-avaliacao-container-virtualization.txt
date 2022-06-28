@@ -1,6 +1,6 @@
-https://github.com/ricardosoareslacerda/broker-drone-monitor
+https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor
 ---------------------------------------------------------------------------
-Avaliação Integrations Tools
+Container & Virtualization
 ---------------------------------------------------------------------------
 - aplicacao de jobs de drones para cada 10 segundos enviar informações do drone para um serviço rest
 	- instancias de drones no job 
@@ -9,7 +9,7 @@ Avaliação Integrations Tools
 	- temperatura >= 35 ou <= 0
 	- umidade <= 15%
 
-- drone-job-quartz
+- drone-monitor-job
 ---------------------------------------------------------------------------
 	- DroneScheduller
 		- cron-scheduller de 10/10s 
@@ -21,14 +21,14 @@ Avaliação Integrations Tools
 	- DroneServices
 		- envia para o serviço rest
 	
-- drone-producer
+- drone-monitor-producer
 ---------------------------------------------------------------------------
 	- controller
 		- recebe dados drone
 	- producer
 		- envia para o topico
 		
-- drone-consumer
+- drone-monitor-consumer
 ---------------------------------------------------------------------------
 	- listener
 		recebe dados drone
@@ -45,5 +45,3 @@ Avaliação Integrations Tools
 			- getTemplateMail
 
 ---------------------------------------------------------------------------
-- criar read-me
-	- copiar do projeto anterior
