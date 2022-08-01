@@ -66,6 +66,10 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 
 > Link em vídeo-2 da aplicação rodando.  https://www.loom.com/share/1605329bd5e54e60915623a4a59367d5
 
+## Vídeo-3 Apresentação da Aplicação em DOCKER SWARM:dash:
+
+> Link em vídeo-3 da aplicação rodando.
+
 ## Como rodar a aplicação :arrow_forward:
 
 No terminal, clone o projeto:
@@ -83,8 +87,8 @@ git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git
   - aguardar a instalação do server (Zookeeper/Kafka)
 - Iniciar a ide Intellij
 - Abrir o projeto no Intellij
-- Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail no arquivo de properties do projeto. 
-```  drone-monitor-consumer -> src\main\resources -> application.properties - mail.sender.toAddresses```
+- Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail no arquivo de properties do projeto.
+  ```  drone-monitor-consumer -> src\main\resources -> application.properties - mail.sender.toAddresses```
 - Executar os projetos no Intellij:
   * **drone-monitor-producer**
   * **drone-monitor-consumer**
@@ -93,7 +97,7 @@ git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git
 ## Desenvolvedores/Contribuintes :octocat:
 
 Liste o time responsável pelo desenvolvimento do projeto
-[<br><sub>Ricardo Lacerda</sub>](https://github.com/ricardosoareslacerda) | [<br><sub>Marcos Porto</sub>](https://github.com/maporto) |  [<br><sub>Juscelino Carvalho</sub>](https://github.com/JuscelinoCarvalho) |  [<br><sub>Gabriel Batalha</sub>]() |
+[<br><sub>Ricardo Lacerda</sub>](https://github.com/ricardosoareslacerda) | [<br><sub>Marcos Porto</sub>](https://github.com/maporto) |  [<br><sub>Gabriel Batalha</sub>]() |
 
 ## Licença
 

@@ -81,6 +81,7 @@ services:
             KAFKA_TOPIC: drone_topic
         depends_on:
             - kafka
+            - zookeeper
         networks:
             - broker-net
 
@@ -95,6 +96,7 @@ services:
             KAFKA_TOPIC: drone_topic
         depends_on:
             - kafka
+            - zookeeper
             - mongo-dronedb
         networks:
             - broker-net
@@ -110,6 +112,7 @@ services:
             KAFKA_TOPIC: drone_topic
         depends_on:
             - kafka
+            - zookeeper
             - drone-kafka-producer
         networks:
             - broker-net
@@ -118,5 +121,6 @@ services:
 networks:
     broker-net:
         name: broker-net
+        driver: overlay
 volumes:
     dronedb:
