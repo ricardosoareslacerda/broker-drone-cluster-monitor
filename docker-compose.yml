@@ -2,23 +2,75 @@ version: '3.8'
 services:
     zookeeper:
         container_name: zookeeper
-        image: confluentinc/cp-zookeeper:latest
+        image: zookeeper:3.4.9
         environment:
             ZOOKEEPER_CLIENT_PORT: 2181
             ZOOKEEPER_TICK_TIME: 2000
+            ZOO_MY_ID: 1
+            ZOO_PORT: 2181
+            ZOO_SERVERS: server.1=zookeeper:2888:3888
+        volumes:
+            - ./zk-single-kafka-single/zookeeper/data:/data
+            - ./zk-single-kafka-single/zookeeper/datalog:/datalog
         ports:
             - "2181:2181"
+        networks:
+            - broker-net
+
     kafka:
         container_name: kafka
-        image: confluentinc/cp-kafka:latest
-        depends_on:
-            - zookeeper
-        ports:
-            - "29092:29092"
+        image: confluentinc/cp-kafka:5.5.0
         environment:
             KAFKA_BROKER_ID: 1
-            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://localhost:29092
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+            #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://127.0.0.1:29092
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://host.docker.internal:29092
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_HOST:PLAINTEXT
             KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+        volumes:
+            - ./zk-single-kafka-single/kafka/data:/var/lib/kafka/data
+        ports:
+            - "29092:29092"
+        depends_on:
+            - zookeeper
+        networks:
+            - broker-net
+
+    mongo-dronedb:
+        image: mongo
+        container_name: mongo-dronedb
+        restart: always
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: admin
+            MONGO_INITDB_DATABASE: dronedb
+        volumes:
+            - dronedb:/data/db
+        networks:
+            - broker-net
+
+    mongo-express:
+        image: mongo-express
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_BASICAUTH_USERNAME: admin
+            ME_CONFIG_BASICAUTH_PASSWORD: admin
+            ME_CONFIG_MONGODB_PORT: 27017
+            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+            ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+        depends_on:
+            - mongo-dronedb
+        networks:
+            - broker-net
+
+# Networks to be created to facilitate communication between containers
+networks:
+    broker-net:
+        name: broker-net
+volumes:
+    dronedb:

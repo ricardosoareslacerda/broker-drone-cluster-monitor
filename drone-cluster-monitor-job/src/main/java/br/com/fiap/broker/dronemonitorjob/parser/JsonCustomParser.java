@@ -1,4 +1,4 @@
-package br.com.fiap.broke.dronemonitorjob.parser;
+package br.com.fiap.broker.dronemonitorjob.parser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

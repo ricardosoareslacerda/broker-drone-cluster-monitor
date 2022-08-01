@@ -14,11 +14,18 @@ import java.util.Date;
 public class DroneVO {
 
     private String id;
+
     private String name;
+
     private BigDecimal latitude;
+
     private BigDecimal longitude;
+
     private long temperature;
+
     private long humidity;
+
     private boolean rastreability;
+
     private Date lastUpdate;
 }

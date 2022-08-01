@@ -1,4 +1,4 @@
-package br.com.fiap.broke.dronemonitorjob.vo;
+package br.com.fiap.broker.dronemonitorjob.vo;
 
 import lombok.*;
 

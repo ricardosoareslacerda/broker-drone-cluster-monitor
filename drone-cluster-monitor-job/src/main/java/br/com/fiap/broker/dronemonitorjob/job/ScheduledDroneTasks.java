@@ -1,7 +1,7 @@
-package br.com.fiap.broke.dronemonitorjob.job;
+package br.com.fiap.broker.dronemonitorjob.job;
 
-import br.com.fiap.broke.dronemonitorjob.parser.JsonCustomParser;
-import br.com.fiap.broke.dronemonitorjob.vo.DroneVO;
+import br.com.fiap.broker.dronemonitorjob.parser.JsonCustomParser;
+import br.com.fiap.broker.dronemonitorjob.vo.DroneVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

@@ -1,4 +1,4 @@
-package br.com.fiap.broke.dronemonitorjob;
+package br.com.fiap.broker.dronemonitorjob;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

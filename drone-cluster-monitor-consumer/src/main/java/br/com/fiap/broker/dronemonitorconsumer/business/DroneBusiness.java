@@ -1,25 +1,27 @@
 package br.com.fiap.broker.dronemonitorconsumer.business;
 
+import br.com.fiap.broker.dronemonitorconsumer.service.DroneService;
 import br.com.fiap.broker.dronemonitorconsumer.service.MailService;
 import br.com.fiap.broker.dronemonitorconsumer.vo.DroneVO;
-import br.com.fiap.broker.dronemonitorconsumer.vo.MailVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class DroneBusiness {
 
     private Map<String, List<LocalTime>> mapDronesTimes;
 
     private final MailService mailService;
+
+    private final DroneService droneService;
 
     @Value("${mail.sender.fromAddress}")
     private String fromAddress;
@@ -52,15 +54,21 @@ public class DroneBusiness {
         boolean isInValidHumidity = (Long.valueOf(droneVO.getHumidity()).compareTo(15L) <= 0);
         if (isInValidTemperature || isInValidHumidity) {
 
-            log.warn("Drone " + droneVO.getId() + " is down");
+			if (droneVO.getLastUpdate() == null)
+	            droneVO.setLastUpdate(new Date());
+				
+            log.warn("Drone " + droneVO.getId() + " is down | Hour: " + new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").getInstance().format(droneVO.getLastUpdate()));
+
 
             try {
-                mailService.sendMail(MailVO.builder()
+                droneService.persist(droneVO);
+
+                /*mailService.sendMail(MailVO.builder()
                             .fromAddress(fromAddress)
                             .toAddresses(toAddresses)
                             .subject(subject)
                             .drone(droneVO)
-                            .build());
+                            .build());*/
             }
             catch (Exception e) {
                 log.error("Error sending mail", e);

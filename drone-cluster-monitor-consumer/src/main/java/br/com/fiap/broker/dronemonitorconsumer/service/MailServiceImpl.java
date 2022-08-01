@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
