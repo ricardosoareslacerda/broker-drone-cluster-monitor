@@ -23,7 +23,6 @@ services:
         environment:
             KAFKA_BROKER_ID: 1
             KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-            #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://127.0.0.1:29092
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://host.docker.internal:29092
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_HOST:PLAINTEXT
             KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
@@ -55,6 +54,7 @@ services:
 
     mongo-express:
         image: mongo-express
+        container_name: mongo-express
         ports:
             - 8081:8081
         environment:
@@ -65,6 +65,52 @@ services:
             ME_CONFIG_MONGODB_ADMINPASSWORD: admin
         depends_on:
             - mongo-dronedb
+        networks:
+            - broker-net
+
+    drone-kafka-producer:
+        image: ricardosoareslacerda/drone-kafka-producer:lastest
+        container_name: drone-kafka-producer
+        ports:
+            - 8082:8082
+        environment:
+            HOST_KAFKA_DOCKER_INTERNAL: host.docker.internal
+            HOST_PRODUCER_DOCKER_INTERNAL: host.docker.internal
+            PORT_HOST_PRODUCER_DOCKER_INTERNAL: 8082
+            KAFKA_GROUP: drone_group
+            KAFKA_TOPIC: drone_topic
+        depends_on:
+            - kafka
+        networks:
+            - broker-net
+
+    drone-kafka-consumer:
+        image: ricardosoareslacerda/drone-kafka-consumer:lastest
+        container_name: drone-kafka-consumer
+        environment:
+            HOST_KAFKA_DOCKER_INTERNAL: host.docker.internal
+            MONGODB_HOST: host.docker.internal
+            MONGODB_PORT: 27017
+            KAFKA_GROUP: drone_group
+            KAFKA_TOPIC: drone_topic
+        depends_on:
+            - kafka
+            - mongo-dronedb
+        networks:
+            - broker-net
+
+    drone-kafka-job:
+        image: ricardosoareslacerda/drone-kafka-job:lastest
+        container_name: drone-kafka-job
+        environment:
+            PATH_HOST_PRODUCER_DOCKER_INTERNAL: host.docker.internal:8082/api/v1/drones-monitor/
+            RESOURCE_API_HOST_PRODUCER: drones/register/
+            MONGODB_PORT: 27017
+            KAFKA_GROUP: drone_group
+            KAFKA_TOPIC: drone_topic
+        depends_on:
+            - kafka
+            - drone-kafka-producer
         networks:
             - broker-net
 

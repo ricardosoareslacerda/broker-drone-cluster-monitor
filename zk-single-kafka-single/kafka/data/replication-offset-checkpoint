@@ -28,8 +28,8 @@ __consumer_offsets 15 0
 __consumer_offsets 24 0
 __consumer_offsets 38 0
 __consumer_offsets 17 0
-__consumer_offsets 48 6015
-__confluent.support.metrics 0 6
+__consumer_offsets 48 6276
+__confluent.support.metrics 0 8
 __consumer_offsets 19 0
 __consumer_offsets 11 0
 __consumer_offsets 13 0
@@ -37,7 +37,7 @@ __consumer_offsets 2 0
 __consumer_offsets 43 0
 __consumer_offsets 6 0
 __consumer_offsets 14 0
-drone_topic 0 6891
+drone_topic 0 7186
 __consumer_offsets 20 0
 __consumer_offsets 0 0
 __consumer_offsets 44 0
