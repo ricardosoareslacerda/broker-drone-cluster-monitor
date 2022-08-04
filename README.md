@@ -91,10 +91,10 @@ git clone [https://github.com/ricardosoareslacerda/broker-drone-monitor.git](htt
 - Editar as variáveis de ambiente para ajuste das configurações de envio de e-mail
   - Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail nas variáveis de ambiente no docker-compose.
   ```  projeto -> drone-monitor-consumer
-      - CONFIG_GMAIL_USERNAME: ricardosoareslacerda@gmail.com
-      - CONFIG_GMAIL_APP_PASSWORD: bwzrltermsamneyy
-      - MAIL_ADDRESS_FROM: ricardosoareslacerda@gmail.com
-      - MAIL_ADDRESS_TO: ricardosoareslacerda@gmail.com
+      - CONFIG_GMAIL_USERNAME: {e-mail a ser usado para configurar o envio de e-mail}
+      - CONFIG_GMAIL_APP_PASSWORD: {senha de aplicativos configurada na conta do gmail.com}
+      - MAIL_ADDRESS_FROM: {e-mail usado para envio} -> ****@gmail.com
+      - MAIL_ADDRESS_TO: {e-mail usado para recebimento} -> ****@gmail.com
 - Executar o Docker Compose:
   - docker-compose up (na raiz do projeto)
   - aguardar a instalação do server (Zookeeper/Kafka)
