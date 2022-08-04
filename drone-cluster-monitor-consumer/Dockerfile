@@ -13,16 +13,6 @@ WORKDIR /app
 
 RUN gradle clean build
 
-ENV HOST_KAFKA_DOCKER_INTERNAL=host.docker.internal
-ENV MONGODB_HOST=host.docker.internal
-ENV MONGODB_PORT=27017
-ENV MONGODB_AUTH_DATABASE=admin
-ENV MONGODB_DATABASE=dronedb
-ENV MONGODB_USERNAME=root
-ENV MONGODB_PASSWORD=MongoDB2022!
-ENV KAFKA_GROUP=drone_group
-ENV KAFKA_TOPIC=drone_topic
-
 ENV CONFIG_GMAIL_USERNAME=ricardosoareslacerda@gmail.com
 ENV CONFIG_GMAIL_APP_PASSWORD=bwzrltermsamneyy
 
