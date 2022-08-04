@@ -83,7 +83,7 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 No terminal, clone o projeto:
 
 ```
-git clone [https://github.com/ricardosoareslacerda/broker-drone-monitor.git](https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git)
+git clone [git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git](https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git)
 ```
 
 - [Instalar o Docker](https://www.docker.com/products/docker-desktop)
