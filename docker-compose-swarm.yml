@@ -7,7 +7,7 @@ services:
             ZOO_PORT: 2181
             ZOO_SERVERS: server.1=zookeeper1:2888:3888
         volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
+            #- "/var/run/docker.sock:/var/run/docker.sock"
             - "zookeeper1-data:/var/lib/zookeeper1/data"
             - "zookeeper1-txn-logs:/var/lib/zookeeper1/log"
         container_name: zookeeper1
@@ -20,26 +20,26 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == manager]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     kafka:
         image: confluentinc/cp-kafka:5.5.0
         environment:
             KAFKA_BROKER_ID: 1
             KAFKA_ZOOKEEPER_CONNECT: "zookeeper1:2181"
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://kafka_outside:29092
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://127.0.0.1:29092
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_HOST:PLAINTEXT
             KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
             KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
         volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
+            #- "/var/run/docker.sock:/var/run/docker.sock"
             - "kafka-data:/var/lib/kafka/data"
             - "kafka-data:/tmp/kafka-logs"
-        hostname: kafka_outside
+        hostname: kafka
         container_name: kafka
         ports:
             - "29092:29092"
@@ -52,14 +52,15 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == manager]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     kowl:
         image: quay.io/cloudhut/kowl:v1.2.2
         volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
             - ./kowl_config.yaml:/etc/kowl/config.yaml
         entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
         container_name: kowl
@@ -76,11 +77,11 @@ services:
         deploy:
             replicas: 1
             placement:
-                constraints: [node.role == worker]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                constraints: [node.role == manager]
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     mongo-dronedb:
         image: mongo
@@ -89,7 +90,7 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: MongoDB2022!
             MONGO_INITDB_DATABASE: dronedb
         volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
+            #- "/var/run/docker.sock:/var/run/docker.sock"
             - dronedb:/data/db
             - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
         container_name: mongo-dronedb
@@ -102,10 +103,10 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == manager]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     mongo-express:
         image: mongo-express
@@ -130,11 +131,11 @@ services:
         deploy:
             replicas: 1
             placement:
-                constraints: [node.role == manager]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                constraints: [node.role == worker]
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     drone-kafka-producer:
         image: ricardosoareslacerda/drone-kafka-producer:lastest
@@ -157,10 +158,10 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == worker]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     drone-kafka-consumer:
         image: ricardosoareslacerda/drone-kafka-consumer:lastest
@@ -193,10 +194,10 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == worker]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     drone-kafka-job:
         image: ricardosoareslacerda/drone-kafka-job:lastest
@@ -216,10 +217,10 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == worker]
-                #max_replicas_per_node: 1
-            #restart_policy:
-            #    condition: on-failure
-            #    max_attempts: 3
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
 
     visualizer:
         image: dockersamples/visualizer:stable
@@ -229,7 +230,7 @@ services:
         - "/var/run/docker.sock:/var/run/docker.sock"
         deploy:
             placement:
-                constraints: [node.role == worker]    
+                constraints: [node.role == manager]    
 
 # Networks to be created to facilitate communication between containers
 networks:
