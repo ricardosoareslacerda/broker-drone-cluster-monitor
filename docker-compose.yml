@@ -113,6 +113,7 @@ services:
         #        constraints: [node.role == manager]
 
     mongo-express:
+        image: mongo-express
         build: 
             context: .
             dockerfile: ./mongo/Dockerfile
