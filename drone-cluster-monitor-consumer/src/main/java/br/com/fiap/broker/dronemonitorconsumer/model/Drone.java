@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 @ToString
 @EqualsAndHashCode
-@Document(collection = "drone")
+@Document(collection = "drones")
 public class Drone {
 
     @MongoId(FieldType.STRING)

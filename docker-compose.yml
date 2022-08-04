@@ -1,126 +1,180 @@
 version: '3.8'
 services:
-    zookeeper:
-        container_name: zookeeper
+    zookeeper1:
         image: zookeeper:3.4.9
         environment:
-            ZOOKEEPER_CLIENT_PORT: 2181
-            ZOOKEEPER_TICK_TIME: 2000
             ZOO_MY_ID: 1
             ZOO_PORT: 2181
-            ZOO_SERVERS: server.1=zookeeper:2888:3888
+            ZOO_SERVERS: server.1=zookeeper1:2888:3888
         volumes:
-            - ./zk-single-kafka-single/zookeeper/data:/data
-            - ./zk-single-kafka-single/zookeeper/datalog:/datalog
+            #- ./zk-single-kafka-single/zookeeper1/data:/data
+            #- ./zk-single-kafka-single/zookeeper1/datalog:/datalog
+            - "zookeeper1-data:/var/lib/zookeeper1/data"
+            - "zookeeper1-txn-logs:/var/lib/zookeeper1/log"
+        container_name: zookeeper1
         ports:
             - "2181:2181"
         networks:
             - broker-net
+        restart: always
 
     kafka:
-        container_name: kafka
         image: confluentinc/cp-kafka:5.5.0
         environment:
             KAFKA_BROKER_ID: 1
-            KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper1:2181"
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092, PLAINTEXT_HOST://host.docker.internal:29092
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_HOST:PLAINTEXT
             KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
             KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
         volumes:
-            - ./zk-single-kafka-single/kafka/data:/var/lib/kafka/data
+            #- ./zk-single-kafka-single/kafka/data:/var/lib/kafka/data
+            #- ./zk-single-kafka-single/kafka/logs:/tmp/kafka-logs
+            - "kafka-data:/var/lib/kafka/data"
+            - "kafka-data:/tmp/kafka-logs"
+        hostname: kafka
+        container_name: kafka
         ports:
             - "29092:29092"
-        depends_on:
-            - zookeeper
         networks:
             - broker-net
+        restart: always
+        depends_on:
+            - zookeeper1
+
+    kowl:
+        image: quay.io/cloudhut/kowl:v1.2.2
+        volumes:
+            - ./kowl_config.yaml:/etc/kowl/config.yaml
+        entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
+        hostname: kowl
+        container_name: kowl
+        ports:
+            - "8080:8080"
+        links:
+            - kafka
+        networks:
+            - broker-net
+        restart: always
+        depends_on:
+            - kafka
+            - zookeeper1
+            - drone-kafka-producer
+            - drone-kafka-consumer
 
     mongo-dronedb:
         image: mongo
-        container_name: mongo-dronedb
-        restart: always
-        ports:
-            - "27017:27017"
         environment:
-            MONGO_INITDB_ROOT_USERNAME: admin
-            MONGO_INITDB_ROOT_PASSWORD: admin
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: MongoDB2022!
             MONGO_INITDB_DATABASE: dronedb
         volumes:
             - dronedb:/data/db
+            - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+        container_name: mongo-dronedb
+        hostname: mongo-dronedb
+        ports:
+            - "27017:27017"
         networks:
             - broker-net
+        restart: always
 
     mongo-express:
-        image: mongo-express
+        build: 
+            context: .
+            dockerfile: ./mongo/Dockerfile
+        environment:
+            ME_CONFIG_BASICAUTH_USERNAME: root
+            ME_CONFIG_BASICAUTH_PASSWORD: MongoExpress2022!
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2022!
+            ME_CONFIG_MONGODB_PORT: 27017
+            ME_CONFIG_MONGODB_SERVER: host.docker.internal
+        hostname: mongo-express
         container_name: mongo-express
         ports:
-            - 8081:8081
-        environment:
-            ME_CONFIG_BASICAUTH_USERNAME: admin
-            ME_CONFIG_BASICAUTH_PASSWORD: admin
-            ME_CONFIG_MONGODB_PORT: 27017
-            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-            ME_CONFIG_MONGODB_ADMINPASSWORD: admin
-        depends_on:
+            - "8081:8081"
+        links:
             - mongo-dronedb
         networks:
             - broker-net
+        restart: always
+        depends_on:
+            - mongo-dronedb
 
     drone-kafka-producer:
         image: ricardosoareslacerda/drone-kafka-producer:lastest
-        container_name: drone-kafka-producer
-        ports:
-            - 8082:8082
         environment:
-            HOST_KAFKA_DOCKER_INTERNAL: host.docker.internal
+            HOST_KAFKA_DOCKER_INTERNAL: kafka
             HOST_PRODUCER_DOCKER_INTERNAL: host.docker.internal
             PORT_HOST_PRODUCER_DOCKER_INTERNAL: 8082
             KAFKA_GROUP: drone_group
             KAFKA_TOPIC: drone_topic
-        depends_on:
+        hostname: drone-kafka-producer
+        container_name: drone-kafka-producer
+        ports:
+            - "8082:8082"
+        links:
             - kafka
-            - zookeeper
         networks:
             - broker-net
+        restart: always
+        depends_on:
+            - kafka
+            - zookeeper1
 
     drone-kafka-consumer:
-        image: ricardosoareslacerda/drone-kafka-consumer:lastest
-        container_name: drone-kafka-consumer
+        #image: ricardosoareslacerda/drone-kafka-consumer:lastest:
+        build: 
+            context: ./drone-cluster-monitor-consumer
+            dockerfile: ./Dockerfile
         environment:
-            HOST_KAFKA_DOCKER_INTERNAL: host.docker.internal
-            MONGODB_HOST: host.docker.internal
+            HOST_KAFKA_DOCKER_INTERNAL: kafka
+            MONGODB_HOST: mongo-dronedb
+            #MONGODB_HOST: host.docker.internal
             MONGODB_PORT: 27017
+            MONGODB_AUTH_DATABASE: admin
+            MONGODB_DATABASE: dronedb
+            MONGODB_USERNAME: root
+            MONGODB_PASSWORD: MongoDB2022!
             KAFKA_GROUP: drone_group
             KAFKA_TOPIC: drone_topic
-        depends_on:
+        hostname: drone-kafka-consumer
+        container_name: drone-kafka-consumer
+        links:
             - kafka
-            - zookeeper
-            - mongo-dronedb
         networks:
             - broker-net
+        restart: always
+        depends_on:
+            - kafka
+            - zookeeper1
+            - mongo-dronedb
 
     drone-kafka-job:
         image: ricardosoareslacerda/drone-kafka-job:lastest
-        container_name: drone-kafka-job
         environment:
-            PATH_HOST_PRODUCER_DOCKER_INTERNAL: host.docker.internal:8082/api/v1/drones-monitor/
+            PATH_HOST_PRODUCER_DOCKER_INTERNAL: drone-kafka-producer:8082/api/v1/drones-monitor/
             RESOURCE_API_HOST_PRODUCER: drones/register/
-            MONGODB_PORT: 27017
-            KAFKA_GROUP: drone_group
-            KAFKA_TOPIC: drone_topic
-        depends_on:
-            - kafka
-            - zookeeper
+        hostname: drone-kafka-job
+        container_name: drone-kafka-job
+        links:
             - drone-kafka-producer
         networks:
             - broker-net
+        restart: always
+        depends_on:
+            - kafka
+            - zookeeper1
+            - drone-kafka-producer
 
 # Networks to be created to facilitate communication between containers
 networks:
     broker-net:
         name: broker-net
-        driver: overlay
 volumes:
     dronedb:
+    zookeeper1-data:
+    zookeeper1-txn-logs:
+    kafka-data:

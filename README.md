@@ -93,7 +93,8 @@ git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git
   * **drone-monitor-producer**
   * **drone-monitor-consumer**
   * **drone-monitor-job**
-
+- API - Kafka Drone Producer
+    http://localhost:8082/api/v1/drones-monitor/swagger-ui/
 ## Desenvolvedores/Contribuintes :octocat:
 
 Liste o time responsável pelo desenvolvimento do projeto

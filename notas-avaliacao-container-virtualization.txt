@@ -40,8 +40,9 @@ Container & Virtualization
 				- temperatura >= 35 ou <= 0
 				- umidade <= 15%
 	- services
+		- persisty
 		- enviar e-mail
-		- sendMail
-			- getTemplateMail
+			- sendMail
+				- getTemplateMail
 
 ---------------------------------------------------------------------------
