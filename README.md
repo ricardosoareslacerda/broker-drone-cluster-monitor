@@ -53,10 +53,10 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Java 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.htm)
-- [Intellij](https://www.jetbrains.com/idea/download/#download-section) (IDE)
-- [Docker](https://www.docker.com/products/docker-desktop)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Docker Swarm](https://docs.docker.com/engine/swarm/)
 - [Kafka](https://kafka.apache.org/)
+- [Kafka Web UI] (https://cloudhut.dev)
 - [Lombok](https://projectlombok.org/)
 - [Gradle](https://gradle.org/)
 - [Spring](https://spring.io/)
@@ -74,35 +74,38 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 
 > Link em vídeo-2 da aplicação rodando.  https://www.loom.com/share/1605329bd5e54e60915623a4a59367d5
 
-## Vídeo-3 Apresentação da Aplicação em DOCKER SWARM:dash:
+## Vídeo-3 Apresentação da Aplicação em ambiente de Alta Disponibilidade (AWS/DOCKER SWARM):dash:
 
-> Link em vídeo-3 da aplicação rodando.
+> Link em vídeo-3 da aplicação rodando. https://www.loom.com/share/1605329bd5e54e60915623a4a59367d
 
 ## Como rodar a aplicação :arrow_forward:
 
 No terminal, clone o projeto:
 
 ```
-git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git
+git clone [https://github.com/ricardosoareslacerda/broker-drone-monitor.git](https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git)
 ```
 
-- [Instalar o JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
-- [Instalar o Intellij](https://www.jetbrains.com/idea/download/#download-section)
-- Baixar o projeto do git [git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git]
 - [Instalar o Docker](https://www.docker.com/products/docker-desktop)
+- Baixar o projeto do git [git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git]
+- Editar as variáveis de ambiente para ajuste das configurações de envio de e-mail
+  - Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail nas variáveis de ambiente no docker-compose.
+  ```  projeto -> drone-monitor-consumer
+      - CONFIG_GMAIL_USERNAME: ricardosoareslacerda@gmail.com
+      - CONFIG_GMAIL_APP_PASSWORD: bwzrltermsamneyy
+      - MAIL_ADDRESS_FROM: ricardosoareslacerda@gmail.com
+      - MAIL_ADDRESS_TO: ricardosoareslacerda@gmail.com
 - Executar o Docker Compose:
   - docker-compose up (na raiz do projeto)
   - aguardar a instalação do server (Zookeeper/Kafka)
-- Iniciar a ide Intellij
-- Abrir o projeto no Intellij
-- Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail no arquivo de properties do projeto.
-  ```  drone-monitor-consumer -> src\main\resources -> application.properties - mail.sender.toAddresses```
-- Executar os projetos no Intellij:
-  * **drone-monitor-producer**
-  * **drone-monitor-consumer**
-  * **drone-monitor-job**
-- API - Kafka Drone Producer
+- API - Swagger - Kafka Drone Producer
     http://localhost:8082/api/v1/drones-monitor/swagger-ui/
+- Kowl - Kafka WebUI
+    http://localhost:8080
+- Mongo Express - Mongo WebUI
+    http://localhost:8081
+    user: root
+    password: MongoExpress2022!
 ## Desenvolvedores/Contribuintes :octocat:
 
 Liste o time responsável pelo desenvolvimento do projeto
