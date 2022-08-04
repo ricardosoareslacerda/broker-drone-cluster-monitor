@@ -87,7 +87,7 @@ git clone [git clone https://github.com/ricardosoareslacerda/broker-drone-cluste
 ```
 
 - [Instalar o Docker](https://www.docker.com/products/docker-desktop)
-- Baixar o projeto do git [git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git]
+- Baixar o projeto do git [git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git]
 - Editar as variáveis de ambiente para ajuste das configurações de envio de e-mail
   - Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail nas variáveis de ambiente no docker-compose.
   ```  projeto -> drone-monitor-consumer
