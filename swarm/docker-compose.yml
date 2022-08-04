@@ -247,6 +247,7 @@ services:
 networks:
     broker-net:
         name: broker-net
+        external: true
 volumes:
     dronedb:
     zookeeper1-data:
