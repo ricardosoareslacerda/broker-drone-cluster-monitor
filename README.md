@@ -1,9 +1,17 @@
-<h1>Monitoramento de Informações de Drones - FIAP</h1> 
+<h1>FIAP - Ambiente de Alta Disponibilidade - Monitoramento de Informações de Drones - FIAP</h1> 
 
 <p align="center">
   <img src="http://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge"/>
    <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge"/>
 </p>
+
+<div align="center">
+<a href="https://www.fiap.com.br" target="_blank">
+    <img src="https://www.fiap.com.br/wp-content/themes/fiap2016/images/mobile/mba/vitrine/mba-logo.png" height="100px" alt="FIAP" class="center"/>
+</a>
+
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+</div>
 
 > Status do Projeto: :heavy_check_mark: :warning: (concluido, com possíbilidade de um versão com autenticação, e front-end simplificado)
 
