@@ -7,8 +7,6 @@ services:
             ZOO_PORT: 2181
             ZOO_SERVERS: server.1=zookeeper1:2888:3888
         volumes:
-            #- ./zk-single-kafka-single/zookeeper1/data:/data
-            #- ./zk-single-kafka-single/zookeeper1/datalog:/datalog
             - "/var/run/docker.sock:/var/run/docker.sock"
             - "zookeeper1-data:/var/lib/zookeeper1/data"
             - "zookeeper1-txn-logs:/var/lib/zookeeper1/log"
@@ -38,8 +36,6 @@ services:
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
             KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
         volumes:
-            #- ./zk-single-kafka-single/kafka/data:/var/lib/kafka/data
-            #- ./zk-single-kafka-single/kafka/logs:/tmp/kafka-logs
             - "/var/run/docker.sock:/var/run/docker.sock"
             - "kafka-data:/var/lib/kafka/data"
             - "kafka-data:/tmp/kafka-logs"
@@ -66,12 +62,9 @@ services:
         volumes:
             - ./kowl_config.yaml:/etc/kowl/config.yaml
         entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
-        #hostname: kowl
         container_name: kowl
         ports:
             - "8080:8080"
-        #links:
-        #    - kafka
         networks:
             - broker-net
         restart: always
@@ -100,7 +93,6 @@ services:
             - dronedb:/data/db
             - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
         container_name: mongo-dronedb
-        #hostname: mongo-dronedb
         ports:
             - "27017:27017"
         networks:
@@ -127,12 +119,9 @@ services:
             ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2022!
             ME_CONFIG_MONGODB_PORT: 27017
             ME_CONFIG_MONGODB_SERVER: mongo-dronedb
-        #hostname: mongo-express
         container_name: mongo-express
         ports:
             - "8081:8081"
-        #links:
-        #    - mongo-dronedb
         networks:
             - broker-net
         restart: always
@@ -155,12 +144,9 @@ services:
             PORT_HOST_PRODUCER_DOCKER_INTERNAL: 8082
             KAFKA_GROUP: drone_group
             KAFKA_TOPIC: drone_topic
-        #hostname: drone-kafka-producer
         container_name: drone-kafka-producer
         ports:
             - "8082:8082"
-        #links:
-        #    - kafka
         networks:
             - broker-net
         restart: always
@@ -196,8 +182,6 @@ services:
             MAIL_ADDRESS_FROM: ricardosoareslacerda@gmail.com
             MAIL_ADDRESS_TO: ricardosoareslacerda@gmail.com
         container_name: drone-kafka-consumer
-        #links:
-        #   - kafka
         networks:
             - broker-net
         restart: always
@@ -221,8 +205,6 @@ services:
             RESOURCE_API_HOST_PRODUCER: drones/register/
         hostname: drone-kafka-job
         container_name: drone-kafka-job
-        #links:
-         #   - drone-kafka-producer
         networks:
             - broker-net
         restart: always
