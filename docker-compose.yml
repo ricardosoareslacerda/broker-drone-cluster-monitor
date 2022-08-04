@@ -17,6 +17,14 @@ services:
         networks:
             - broker-net
         restart: always
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == manager]
 
     kafka:
         image: confluentinc/cp-kafka:5.5.0
@@ -42,6 +50,14 @@ services:
         restart: always
         depends_on:
             - zookeeper1
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == manager]
 
     kowl:
         image: quay.io/cloudhut/kowl:v1.2.2
@@ -62,6 +78,14 @@ services:
             - zookeeper1
             - drone-kafka-producer
             - drone-kafka-consumer
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == worker]
 
     mongo-dronedb:
         image: mongo
@@ -79,6 +103,14 @@ services:
         networks:
             - broker-net
         restart: always
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == manager]
 
     mongo-express:
         build: 
@@ -102,6 +134,14 @@ services:
         restart: always
         depends_on:
             - mongo-dronedb
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == manager]
 
     drone-kafka-producer:
         image: ricardosoareslacerda/drone-kafka-producer:lastest
@@ -123,9 +163,17 @@ services:
         depends_on:
             - kafka
             - zookeeper1
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == worker]
 
     drone-kafka-consumer:
-        #image: ricardosoareslacerda/drone-kafka-consumer:lastest:
+        image: ricardosoareslacerda/drone-kafka-consumer:lastest
         build: 
             context: ./drone-cluster-monitor-consumer
             dockerfile: ./Dockerfile
@@ -151,6 +199,14 @@ services:
             - kafka
             - zookeeper1
             - mongo-dronedb
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == worker]
 
     drone-kafka-job:
         image: ricardosoareslacerda/drone-kafka-job:lastest
@@ -168,6 +224,24 @@ services:
             - kafka
             - zookeeper1
             - drone-kafka-producer
+        #deploy:
+        #    replicas: 1
+        #    restart_policy:
+        #        condition: on-failure
+        #        max_attempts: 3
+        #    placement:
+        #        max_replicas_per_node: 1
+        #        constraints: [node.role == worker]
+
+#    visualizer:
+#        image: dockersamples/visualizer:stable
+#        ports:
+#        - "8888:8080"
+#        volumes:
+#        - "/var/run/docker.sock:/var/run/docker.sock"
+#        deploy:
+#            placement:
+#                constraints: [node.role == worker]
 
 # Networks to be created to facilitate communication between containers
 networks:
