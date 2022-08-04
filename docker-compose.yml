@@ -12,6 +12,7 @@ services:
             - "zookeeper1-data:/var/lib/zookeeper1/data"
             - "zookeeper1-txn-logs:/var/lib/zookeeper1/log"
         container_name: zookeeper1
+        hostname: zookeeper1
         ports:
             - "2181:2181"
         networks:
@@ -46,6 +47,8 @@ services:
         container_name: kafka
         ports:
             - "29092:29092"
+        links:
+            - zookeeper1
         networks:
             - broker-net
         restart: always
