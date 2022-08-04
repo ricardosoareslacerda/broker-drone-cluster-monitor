@@ -1,0 +1,47 @@
+Roteiro Vídeo
+- logar na conta AWS - Cloud9
+
+- entrar na pasta config cluster
+
+- executar o comando 
+	sh iniciar.sh
+	
+- executar o comando terminal node 1
+	sh conectar.sh
+	escolher 1
+	docker swarm init
+	docker swarm join-token manager
+	copiar o comando com o token
+	
+- abrir outro terminal 
+	sh conectar.sh
+	escolher 2
+	colar o token para adicionar um MANAGER
+		ex.: docker swarm join --token SWMTKN-1-0xiuw5350mynbzsr1sctx13fntee3hefegccmxgjih2ppa8mhs-9jw7gt8xwjwy55xgj28vargmt 10.1.1.211:2377
+	
+- abrir outro terminal 
+	sh conectar.sh
+	escolher 3
+	colar o token WORKER exibido após a inicialização do swarm para adicionar um WORKER
+		ex.: docker swarm join --token SWMTKN-1-0xiuw5350mynbzsr1sctx13fntee3hefegccmxgjih2ppa8mhs-9jw7gt8xwjwy55xgj28vargmt 10.1.1.211:2377
+		
+- executar o comando no terminal node 1
+	docker network create -d overlay broker-net
+	git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose.yml drone-cluster
+	
+	docker service ls
+	docker stack ps drone-cluster
+	
+	docker service logs drone-cluster_zookeeper1
+	docker service logs drone-cluster_kafka
+	docker service logs drone-cluster_kowl
+	docker service logs drone-cluster_mongo_dronedb
+	docker service logs drone-cluster_mongo_express	
+	docker service logs drone-cluster_visualizer
+	docker service logs drone-cluster_drone-kafka-producer
+	docker service logs drone-cluster_drone-kafka-consumer
+	docker service logs drone-cluster_drone-kafka-job
+- para finalização executar 
+	docker stack rm drone-cluster
+	
