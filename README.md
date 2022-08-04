@@ -56,7 +56,7 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Docker Swarm](https://docs.docker.com/engine/swarm/)
 - [Kafka](https://kafka.apache.org/)
-- [Kafka Web UI] (https://cloudhut.dev)
+- [Kafka Web UI](https://cloudhut.dev)
 - [Lombok](https://projectlombok.org/)
 - [Gradle](https://gradle.org/)
 - [Spring](https://spring.io/)
