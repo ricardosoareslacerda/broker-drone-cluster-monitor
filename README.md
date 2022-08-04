@@ -83,11 +83,11 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 No terminal, clone o projeto:
 
 ```
-git clone [https://github.com/ricardosoareslacerda/broker-drone-monitor.git](https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git)
+git clone [git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git](https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git)
 ```
 
 - [Instalar o Docker](https://www.docker.com/products/docker-desktop)
-- Baixar o projeto do git [git clone https://github.com/ricardosoareslacerda/broker-drone-monitor.git]
+- Baixar o projeto do git [git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git]
 - Editar as variáveis de ambiente para ajuste das configurações de envio de e-mail
   - Para receber o envio de alerta, das informações do drone, será necessário configurar o e-mail nas variáveis de ambiente no docker-compose.
   ```  projeto -> drone-monitor-consumer
