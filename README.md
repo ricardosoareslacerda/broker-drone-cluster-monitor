@@ -100,15 +100,15 @@ git clone [https://github.com/ricardosoareslacerda/broker-drone-monitor.git](htt
   - aguardar a instalação do server (Zookeeper/Kafka)
   
 - API - Swagger - Kafka Drone Producer
-    http://localhost:8082/api/v1/drones-monitor/swagger-ui/
+    - http://localhost:8082/api/v1/drones-monitor/swagger-ui/
     
 - Kowl - Kafka WebUI
-    http://localhost:8080
+    - http://localhost:8080
     
 - Mongo Express - Mongo WebUI
     http://localhost:8081
-    user: root
-    password: MongoExpress2022!
+    - user: root
+    - password: MongoExpress2022!
     
 ## Desenvolvedores/Contribuintes :octocat:
 
