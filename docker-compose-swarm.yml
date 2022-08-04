@@ -191,6 +191,10 @@ services:
             MONGODB_PASSWORD: MongoDB2022!
             KAFKA_GROUP: drone_group
             KAFKA_TOPIC: drone_topic
+            CONFIG_GMAIL_USERNAME: ricardosoareslacerda@gmail.com
+            CONFIG_GMAIL_APP_PASSWORD: bwzrltermsamneyy
+            MAIL_ADDRESS_FROM: ricardosoareslacerda@gmail.com
+            MAIL_ADDRESS_TO: ricardosoareslacerda@gmail.com
         container_name: drone-kafka-consumer
         #links:
         #   - kafka
