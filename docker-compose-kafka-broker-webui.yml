@@ -19,18 +19,17 @@ services:
             restart_policy:
                 condition: on-failure
                 max_attempts: 3
-
     kowl:
-        image: quay.io/cloudhut/kowl:v1.4.0
-        volumes:
-            - ./kowl_config.yaml:/etc/kowl/config.yaml
-        entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
-        container_name: kowl
+        image: quay.io/cloudhut/kowl:master
+        restart: unless-stopped
+        hostname: kowl
         ports:
-            - "8080:8080"
+        - "8077:8077"
+        volumes:
+        - ./kowl-config.yaml:/etc/kowl/config.yaml
+        entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
         networks:
             - broker-net
-        restart: always
         depends_on:
             - kafka
         deploy:
