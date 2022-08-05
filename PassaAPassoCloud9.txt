@@ -49,6 +49,9 @@ Roteiro Vídeo
 - Testar aplicação teste kafka
 - adequação o projeto 
 	- separar em arquivos de stacks
+		- TESTAR EXPOR PORTAS
+		- TESTAR COLOCAR DIRETAMENTE O IP DO NÓ
+		- TESTAR COLOCAR O COMANDO
 		- docker-compose-stack-kafka.yml
 		- docker-compose-stack-kafka-services.yml
 		- docker-compose-stack-services.yml

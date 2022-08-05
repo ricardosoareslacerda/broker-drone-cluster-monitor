@@ -1,0 +1,69 @@
+version: '3.8'
+services:
+    drone-kafka-producer:
+        image: ricardosoareslacerda/drone-kafka-producer:lastest
+        environment:
+            HOST_KAFKA_DOCKER_INTERNAL: kafka
+            HOST_PRODUCER_DOCKER_INTERNAL: drone-kafka-producer
+            PORT_HOST_PRODUCER_DOCKER_INTERNAL: 8082
+            KAFKA_GROUP: drone_group
+            KAFKA_TOPIC: drone_topic
+        container_name: drone-kafka-producer
+        ports:
+            - "8082:8082"
+        networks:
+            - broker-net
+        restart: always
+        depends_on:
+            - kafka
+            - zookeeper1
+        deploy:
+            replicas: 1
+            placement:
+                constraints: [node.role == worker]
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
+
+    drone-kafka-consumer:
+        image: ricardosoareslacerda/drone-kafka-consumer:lastest
+        build: 
+            context: ./drone-cluster-monitor-consumer
+            dockerfile: ./Dockerfile
+        environment:
+            HOST_KAFKA_DOCKER_INTERNAL: kafka
+            MONGODB_HOST: mongo-dronedb
+            MONGODB_PORT: 27017
+            MONGODB_AUTH_DATABASE: admin
+            MONGODB_DATABASE: dronedb
+            MONGODB_USERNAME: root
+            MONGODB_PASSWORD: MongoDB2022!
+            KAFKA_GROUP: drone_group
+            KAFKA_TOPIC: drone_topic
+            CONFIG_GMAIL_USERNAME: ricardosoareslacerda@gmail.com
+            CONFIG_GMAIL_APP_PASSWORD: bwzrltermsamneyy
+            MAIL_ADDRESS_FROM: ricardosoareslacerda@gmail.com
+            MAIL_ADDRESS_TO: ricardosoareslacerda@gmail.com
+        container_name: drone-kafka-consumer
+        networks:
+            - broker-net
+        restart: always
+        depends_on:
+            - kafka
+            - zookeeper1
+            - mongo-dronedb
+        deploy:
+            replicas: 1
+            placement:
+                constraints: [node.role == worker]
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
+
+# Networks to be created to facilitate communication between containers
+networks:
+    broker-net:
+        name: broker-net
+        external: true
