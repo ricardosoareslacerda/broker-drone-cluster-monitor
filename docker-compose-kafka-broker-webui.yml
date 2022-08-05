@@ -24,9 +24,9 @@ services:
         restart: unless-stopped
         hostname: kowl
         ports:
-        - "8077:8077"
+            - "8077:8077"
         volumes:
-        - ./kowl-config.yaml:/etc/kowl/config.yaml
+            - ./kowl-config.yaml:/etc/kowl/config.yaml
         entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
         networks:
             - broker-net
@@ -44,9 +44,9 @@ services:
         image: dockersamples/visualizer:stable
         hostname: visualizer
         ports:
-        - "8888:8080"
+            - "8888:8080"
         volumes:
-        - "/var/run/docker.sock:/var/run/docker.sock"
+            - "/var/run/docker.sock:/var/run/docker.sock"
         networks:
             - broker-net
         deploy:
