@@ -184,6 +184,7 @@ services:
         ports:
         - "8077:8077"
         volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
         - ./kowl-config.yaml:/etc/kowl/config.yaml
         entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
         networks:
