@@ -177,27 +177,6 @@ services:
             restart_policy:
                 condition: on-failure
                 max_attempts: 3
-    kowl:
-        image: quay.io/cloudhut/kowl:master
-        restart: unless-stopped
-        hostname: kowl
-        ports:
-        - "8077:8077"
-        volumes:
-        - "/var/run/docker.sock:/var/run/docker.sock"
-        - ./kowl-config.yaml:/etc/kowl/config.yaml
-        entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
-        networks:
-            - broker-net
-        depends_on:
-            - kafka
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == manager]
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
 
 # Networks to be created to facilitate communication between containers
 networks:
