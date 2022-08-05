@@ -17,17 +17,16 @@ services:
             - broker-net
         restart: always
         deploy:
-            replicas: 1
+            replicas: 2
             placement:
                 constraints: [node.role == manager]
-                max_replicas_per_node: 1
             restart_policy:
                 condition: on-failure
-                max_attempts: 1
+                max_attempts: 3
     zookeeper2:
         image: zookeeper:3.4.9
         environment:
-            ZOO_MY_ID: 2
+            ZOO_MY_ID: 3
             ZOO_PORT: 32181
             ZOO_SERVERS: server.1=zookeeper1:22888:23888 server.2=0.0.0.0:32888:33888 server.3=zookeeper3:42888:43888
         volumes:
@@ -41,13 +40,12 @@ services:
             - broker-net
         restart: always
         deploy:
-            replicas: 1
+            replicas: 2
             placement:
                 constraints: [node.role == manager]
-                max_replicas_per_node: 1
             restart_policy:
                 condition: on-failure
-                max_attempts: 1
+                max_attempts: 3
     zookeeper3:
         image: zookeeper:3.4.9
         environment:
@@ -65,13 +63,12 @@ services:
             - broker-net
         restart: always
         deploy:
-            replicas: 1
+            replicas: 2
             placement:
                 constraints: [node.role == manager]
-                max_replicas_per_node: 1
             restart_policy:
                 condition: on-failure
-                max_attempts: 1
+                max_attempts: 3
 
 # Networks to be created to facilitate communication between containers
 networks:
