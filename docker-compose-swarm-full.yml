@@ -53,21 +53,18 @@ services:
             restart_policy:
                 condition: on-failure
                 max_attempts: 3
-
-    kowl:
-        image: quay.io/cloudhut/kowl:v1.2.2
-        volumes:
-            #- "/var/run/docker.sock:/var/run/docker.sock"
-            - ./kowl_config.yaml:/etc/kowl/config.yaml
-        entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
-        container_name: kowl
+    kafkamanager: # https://github.com/yahoo/CMAK
+        image: kafkamanager/kafka-manager
+        container_name: kafkamanager
+        hostname: kafkamanager
         ports:
-            - "8080:8080"
-        networks:
-            - broker-net
-        restart: always
+            - 9000:9000
+        environment:
+            - "ZK_HOSTS=zookeeper1:22181,zookeeper2:32181,zookeeper3:42181"
         depends_on:
             - kafka
+        networks:
+            - broker-net
         deploy:
             replicas: 1
             placement:

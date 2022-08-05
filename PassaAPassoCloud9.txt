@@ -1,52 +1,91 @@
 Roteiro Vídeo
 - logar na conta AWS - Cloud9
 
-- entrar na pasta config cluster
+- entrar na pasta config/cluster
 
 - executar o comando 
 	sh iniciar.sh
 	
 - executar o comando terminal node 1
 	sh conectar.sh
-	escolher 1
+		escolher 1
+		
 	docker swarm init
+		copia token worker
+	
 	docker swarm join-token manager
-	copiar o comando com o token
+		copia token manager
+		
+	copiar ip
 	
 - abrir outro terminal 
 	sh conectar.sh
-	escolher 2
-	colar o token para adicionar um MANAGER
-		ex.: docker swarm join --token SWMTKN-1-0xiuw5350mynbzsr1sctx13fntee3hefegccmxgjih2ppa8mhs-9jw7gt8xwjwy55xgj28vargmt 10.1.1.211:2377
+		escolher 2
+		
+	colar o token MANAGER
+		docker swarm join --token SWMTKN-1-0xiuw5350mynbzsr1sctx13fntee3hefegccmxgjih2ppa8mhs-9jw7gt8xwjwy55xgj28vargmt 10.1.1.211:2377
+	
+	copiar ip
 	
 - abrir outro terminal 
 	sh conectar.sh
-	escolher 3
-	colar o token WORKER exibido após a inicialização do swarm para adicionar um WORKER
+		escolher 3
+		
+	colar o token WORKER
 		ex.: docker swarm join --token SWMTKN-1-0xiuw5350mynbzsr1sctx13fntee3hefegccmxgjih2ppa8mhs-9jw7gt8xwjwy55xgj28vargmt 10.1.1.211:2377
 		
-- executar o comando no terminal node 1
+	copiar ip
+		
+- retornar ao terminal node 1 e executar
 	docker network create -d overlay broker-net
+	
 	git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git
-	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-cluster.yml drone-cluster
-	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-broker.yml drone-cluster
-	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-broker-webui.yml drone-cluster
-	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-cluster.yml drone-cluster
+	
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-swarm-full.yml drone-stack
 	
 	docker service ls
-	docker stack ps drone-cluster
 	
-	docker service logs drone-cluster_zookeeper1
-	docker service logs drone-cluster_kafka
-	docker service logs drone-cluster_kowl
-	docker service logs drone-cluster_mongo_dronedb
-	docker service logs drone-cluster_mongo_express	
-	docker service logs drone-cluster_visualizer
-	docker service logs drone-cluster_drone-kafka-producer
-	docker service logs drone-cluster_drone-kafka-consumer
-	docker service logs drone-cluster_drone-kafka-job
+	docker stack ps drone-stack
+	
+- Acessos:
+	NODE 1 IP: 34.204.61.218
+	NODE 2 IP: 100.26.120.118
+	NODE 3 IP: 52.23.177.183
+	
+	- Job:
+		- docker service logs drone_stack_drone-kafka-job
+		
+	- Producer:
+		- docker service logs drone_stack_drone-kafka-producer
+		
+	- Consumer:
+		- docker service logs drone_stack_drone-kafka-consumer	
+	
+	- Visualizer:
+		- http://100.26.120.118:8888
+	
+	- Kowl:
+		- http://34.204.61.218:8080
+	
+	- Kafka Manager:
+		- http://34.204.61.218:9000
+		
+	- Mongo Express:
+		- http://52.23.177.183:8081
+			- root
+			- MongoExpress2022!
+			
+	- Gmail:
+		- https://mail.google.com/mail/u/0
+	
 - para finalização executar 
-	docker stack rm drone-cluster
+	docker stack rm drone_stack
+	
+	docker volume rm drone_stack_zookeeper-data drone_stack_drone_zookeeper-txn-logs drone_stack_dronedb
+	
+	
+	
+	
 	
 	
 - Testar aplicação teste kafka
@@ -59,3 +98,17 @@ Roteiro Vídeo
 		- docker-compose-stack-kafka-services.yml
 		- docker-compose-stack-services.yml
 	
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-cluster.yml drone-cluster
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-broker.yml drone-cluster
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-broker-webui.yml drone-cluster
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-cluster.yml drone-cluster
+	
+	docker service logs drone-cluster_zookeeper1
+	docker service logs drone-cluster_kafka
+	docker service logs drone-cluster_kowl
+	docker service logs drone-cluster_mongo_dronedb
+	docker service logs drone-cluster_mongo_express	
+	docker service logs drone-cluster_visualizer
+	docker service logs drone-cluster_drone-kafka-producer
+	docker service logs drone-cluster_drone-kafka-consumer
+	docker service logs drone-cluster_drone-kafka-job
