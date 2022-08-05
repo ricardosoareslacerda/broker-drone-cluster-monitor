@@ -62,7 +62,7 @@ services:
             MONGO_INITDB_DATABASE: dronedb
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-            - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+            - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
         container_name: mongo-dronedb
         ports:
             - "27017:27017"
