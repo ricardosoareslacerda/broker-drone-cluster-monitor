@@ -17,7 +17,7 @@ services:
             - broker-net
         restart: always
         deploy:
-            replicas: 2
+            replicas: 1
             placement:
                 constraints: [node.role == manager]
             restart_policy:
@@ -40,7 +40,7 @@ services:
             - broker-net
         restart: always
         deploy:
-            replicas: 2
+            replicas: 1
             placement:
                 constraints: [node.role == manager]
             restart_policy:
@@ -63,7 +63,7 @@ services:
             - broker-net
         restart: always
         deploy:
-            replicas: 2
+            replicas: 1
             placement:
                 constraints: [node.role == manager]
             restart_policy:
