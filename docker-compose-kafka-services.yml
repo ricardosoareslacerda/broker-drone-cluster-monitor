@@ -18,7 +18,7 @@ services:
         depends_on:
             - kafka
         deploy:
-            replicas: 2
+            replicas: 1
             placement:
                 constraints: [node.role == worker]
             restart_policy:
@@ -53,7 +53,7 @@ services:
             - kafka
             - mongo-dronedb
         deploy:
-            replicas: 2
+            replicas: 1
             placement:
                 constraints: [node.role == worker]
             restart_policy:
