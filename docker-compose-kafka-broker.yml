@@ -11,9 +11,7 @@ services:
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
             KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
         volumes:
-            #- "/var/run/docker.sock:/var/run/docker.sock"
-            - "kafka-data:/var/lib/kafka/data"
-            - "kafka-data-logs:/tmp/kafka-logs"
+            - "/var/run/docker.sock:/var/run/docker.sock"
         hostname: kafka
         container_name: kafka
         ports:
@@ -24,6 +22,8 @@ services:
         restart: always
         depends_on:
             - zookeeper1
+            - zookeeper2
+            - zookeeper3
         deploy:
             replicas: 1
             placement:
