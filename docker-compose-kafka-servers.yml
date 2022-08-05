@@ -5,14 +5,60 @@ services:
         environment:
             ZOO_MY_ID: 1
             ZOO_PORT: 2181
-            ZOO_SERVERS: server.1=zookeeper1:2888:3888
+            #ZOO_SERVERS: server.1=zookeeper1:2888:3888
+            ZOO_SERVERS: server.1=zookeeper1:2888:3888;2181 server.2=zookeeper2:2888:3888;2181 server.3=zookeeper3:2888:3888;2181
         volumes:
-            #- "/var/run/docker.sock:/var/run/docker.sock"
             - "zookeeper1-data:/var/lib/zookeeper1/data"
             - "zookeeper1-txn-logs:/var/lib/zookeeper1/log"
         container_name: zookeeper1
         ports:
             - "2181:2181"
+        networks:
+            - broker-net
+        restart: always
+        deploy:
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
+    zookeeper2:
+        image: zookeeper:3.4.9
+        environment:
+            ZOO_MY_ID: 2
+            ZOO_PORT: 2182
+            ZOO_SERVERS: server.1=zookeeper1:2888:3888
+        volumes:
+            - "zookeeper2-data:/var/lib/zookeeper2/data"
+            - "zookeeper2-txn-logs:/var/lib/zookeeper2/log"
+        container_name: zookeeper2
+        ports:
+            - "2182:2181"
+        networks:
+            - broker-net
+        restart: always
+        deploy:
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+                max_replicas_per_node: 1
+            restart_policy:
+                condition: on-failure
+                max_attempts: 1
+    zookeeper3:
+        image: zookeeper:3.4.9
+        environment:
+            ZOO_MY_ID: 3
+            ZOO_PORT: 2183
+            ZOO_SERVERS: server.1=zookeeper1:2888:3888
+        volumes:
+            - "zookeeper3-data:/var/lib/zookeeper3/data"
+            - "zookeeper3-txn-logs:/var/lib/zookeeper3/log"
+        container_name: zookeeper3
+        ports:
+            - "2183:2181"
         networks:
             - broker-net
         restart: always
