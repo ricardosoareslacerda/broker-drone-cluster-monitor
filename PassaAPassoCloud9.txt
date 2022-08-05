@@ -42,8 +42,10 @@ Roteiro Vídeo
 	git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git
 	
 	docker stack deploy -c ./broker-drone-cluster-monitor/docker stack deploy -c docker-compose-swarm-full.a.yml drone-stack
+	docker stack deploy -c docker-compose-swarm-full.a.yml drone-stack
 	
 	docker stack deploy -c ./broker-drone-cluster-monitor/docker stack deploy -c docker-compose-swarm-full.b.yml drone-stack
+	docker stack deploy -c docker-compose-swarm-full.b.yml drone-stack
 	
 	docker service ls
 	

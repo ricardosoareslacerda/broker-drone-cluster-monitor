@@ -61,7 +61,7 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: MongoDB2022!
             MONGO_INITDB_DATABASE: dronedb
         volumes:
-            - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+            - "./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro"
         container_name: mongo-dronedb
         ports:
             - "27017:27017"
@@ -176,6 +176,7 @@ services:
             restart_policy:
                 condition: on-failure
                 max_attempts: 3
+
     kowl:
         image: quay.io/cloudhut/kowl:master
         restart: unless-stopped
@@ -183,7 +184,7 @@ services:
         ports:
             - 8100:8080
         volumes:
-            - ./kowl_config.yaml:/etc/kowl/config.yaml
+            - "./kowl_config.yaml:/etc/kowl/config.yaml"
         entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
         networks:
             - broker-net
