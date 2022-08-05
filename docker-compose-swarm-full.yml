@@ -68,9 +68,6 @@ services:
         restart: always
         depends_on:
             - kafka
-            - zookeeper
-            - drone-kafka-producer
-            - drone-kafka-consumer
         deploy:
             replicas: 1
             placement:
@@ -180,7 +177,6 @@ services:
         restart: always
         depends_on:
             - kafka
-            - zookeeper
             - mongo-dronedb
         deploy:
             replicas: 1
@@ -202,7 +198,6 @@ services:
         restart: always
         depends_on:
             - kafka
-            - zookeeper
             - drone-kafka-producer
         deploy:
             replicas: 1
@@ -219,7 +214,7 @@ services:
         volumes:
         - "/var/run/docker.sock:/var/run/docker.sock"
         deploy:
-            replicas: 2
+            replicas: 1
             placement:
                 constraints: [node.role == manager] 
             restart_policy:
