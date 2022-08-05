@@ -164,27 +164,6 @@ services:
                 condition: on-failure
                 max_attempts: 3
 
-    drone-kafka-job:
-        image: ricardosoareslacerda/drone-kafka-job:lastest
-        environment:
-            PATH_HOST_PRODUCER_DOCKER_INTERNAL: drone-kafka-producer:8082/api/v1/drones-monitor/
-            RESOURCE_API_HOST_PRODUCER: drones/register/
-        hostname: drone-kafka-job
-        container_name: drone-kafka-job
-        networks:
-            - broker-net
-        restart: always
-        depends_on:
-            - kafka
-            - drone-kafka-producer
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == worker]
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
-
     visualizer:
         image: dockersamples/visualizer:stable
         ports:
@@ -195,6 +174,26 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == manager] 
+            restart_policy:
+                condition: on-failure
+                max_attempts: 3
+    kowl:
+        image: quay.io/cloudhut/kowl:master
+        restart: unless-stopped
+        hostname: kowl
+        ports:
+        - "8077:8077"
+        volumes:
+        - ./kowl-config.yaml:/etc/kowl/config.yaml
+        entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
+        networks:
+            - broker-net
+        depends_on:
+            - kafka
+        deploy:
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
             restart_policy:
                 condition: on-failure
                 max_attempts: 3

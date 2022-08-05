@@ -48,8 +48,8 @@ Roteiro Vídeo
 	docker stack ps drone-stack
 	
 - Acessos:
-	NODE 1 IP: 34.204.61.218
-	NODE 2 IP: 100.26.120.118
+	NODE 1 IP: 18.207.236.38
+	NODE 2 IP: 18.234.168.36
 	NODE 3 IP: 52.23.177.183
 	
 	- Job:
@@ -62,13 +62,13 @@ Roteiro Vídeo
 		- docker service logs drone_stack_drone-kafka-consumer	
 	
 	- Visualizer:
-		- http://100.26.120.118:8888
+		- http://18.234.168.36:8888
 	
 	- Kowl:
-		- http://34.204.61.218:8080
+		- http://34.204.61.218:8077
 	
 	- Kafka Manager:
-		- http://34.204.61.218:9000
+		- http://18.207.236.38:9000
 		
 	- Mongo Express:
 		- http://52.23.177.183:8081
