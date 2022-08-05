@@ -21,10 +21,9 @@ services:
                 max_attempts: 3
 
     kowl:
-        image: quay.io/cloudhut/kowl:v1.2.2
+        image: quay.io/cloudhut/kowl:v1.4.0
         volumes:
             - ./kowl_config.yaml:/etc/kowl/config.yaml
-            - "/var/run/docker.sock:/var/run/docker.sock"
         entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
         container_name: kowl
         ports:
