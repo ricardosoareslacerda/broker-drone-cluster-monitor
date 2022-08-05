@@ -79,3 +79,7 @@ networks:
 volumes:
     zookeeper1-data:
     zookeeper1-txn-logs:
+    zookeeper2-data:
+    zookeeper2-txn-logs:
+    zookeeper3-data:
+    zookeeper3-txn-logs:
