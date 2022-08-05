@@ -28,7 +28,10 @@ Roteiro Vídeo
 - executar o comando no terminal node 1
 	docker network create -d overlay broker-net
 	git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git
-	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose.yml drone-cluster
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-cluster.yml drone-cluster
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-broker.yml drone-cluster
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-broker-webui.yml drone-cluster
+	docker stack deploy -c ./broker-drone-cluster-monitor/docker-compose-kafka-cluster.yml drone-cluster
 	
 	docker service ls
 	docker stack ps drone-cluster
