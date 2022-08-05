@@ -5,14 +5,13 @@ services:
         environment:
             PATH_HOST_PRODUCER_DOCKER_INTERNAL: drone-kafka-producer:8082/api/v1/drones-monitor/
             RESOURCE_API_HOST_PRODUCER: drones/register/
-        hostname: drone-kafka-job
         container_name: drone-kafka-job
+        hostname: drone-kafka-job
         networks:
             - broker-net
         restart: always
         depends_on:
             - kafka
-            - zookeeper1
             - drone-kafka-producer
         deploy:
             replicas: 1

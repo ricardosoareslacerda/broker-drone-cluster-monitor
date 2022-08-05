@@ -3,7 +3,7 @@ services:
     kowl:
         image: quay.io/cloudhut/kowl:v1.2.2
         volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
+            #- "/var/run/docker.sock:/var/run/docker.sock"
             - ./kowl_config.yaml:/etc/kowl/config.yaml
         entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
         container_name: kowl
@@ -14,9 +14,6 @@ services:
         restart: always
         depends_on:
             - kafka
-            - zookeeper1
-            - drone-kafka-producer
-            - drone-kafka-consumer
         deploy:
             replicas: 1
             placement:

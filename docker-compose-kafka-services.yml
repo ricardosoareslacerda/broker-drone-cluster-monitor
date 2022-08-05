@@ -9,6 +9,7 @@ services:
             KAFKA_GROUP: drone_group
             KAFKA_TOPIC: drone_topic
         container_name: drone-kafka-producer
+        hostname: drone-kafka-producer
         ports:
             - "8082:8082"
         networks:
@@ -16,7 +17,6 @@ services:
         restart: always
         depends_on:
             - kafka
-            - zookeeper1
         deploy:
             replicas: 1
             placement:
@@ -46,12 +46,12 @@ services:
             MAIL_ADDRESS_FROM: ricardosoareslacerda@gmail.com
             MAIL_ADDRESS_TO: ricardosoareslacerda@gmail.com
         container_name: drone-kafka-consumer
+        hostname: drone-kafka-consumer
         networks:
             - broker-net
         restart: always
         depends_on:
             - kafka
-            - zookeeper1
             - mongo-dronedb
         deploy:
             replicas: 1
