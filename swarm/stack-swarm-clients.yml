@@ -1,26 +1,5 @@
 version: '3.8'
 services:
-    drone-kafka-job:
-        image: ricardosoareslacerda/drone-kafka-job:lastest
-        environment:
-            PATH_HOST_PRODUCER_DOCKER_INTERNAL: drone-kafka-producer:8082/api/v1/drones-monitor/
-            RESOURCE_API_HOST_PRODUCER: drones/register/
-        container_name: drone-kafka-job
-        hostname: drone-kafka-job
-        networks:
-            - broker-net
-        restart: always
-        depends_on:
-            - kafka
-            - drone-kafka-producer
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == worker]
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
-
     mongo-express:
         image: mongo-express
         build: 

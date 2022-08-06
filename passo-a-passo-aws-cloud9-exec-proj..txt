@@ -1,7 +1,10 @@
 Roteiro Vídeo
 - logar na conta AWS - Cloud9
 
-- entrar na pasta config/cluster
+- IP Máquina Virtual - AWS
+	- 3.90.42.23
+
+- entrar na pasta cd config/cluster
 
 - executar o comando 
 	sh iniciar.sh
@@ -12,9 +15,11 @@ Roteiro Vídeo
 		
 	docker swarm init
 		copia token worker
+		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-2few50kycnit6f5lh6gg21hpv 10.1.1.184:2377
 	
 	docker swarm join-token manager
 		copia token manager
+		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-5o8bnp1icy5ko1be3ia5yl2e2 10.1.1.184:2377
 		
 	copiar ip
 	
@@ -22,65 +27,71 @@ Roteiro Vídeo
 	sh conectar.sh
 		escolher 2
 		
-	colar o token MANAGER
-		docker swarm join --token SWMTKN-1-0xiuw5350mynbzsr1sctx13fntee3hefegccmxgjih2ppa8mhs-9jw7gt8xwjwy55xgj28vargmt 10.1.1.211:2377
-	
 	copiar ip
+		
+	colar o token MANAGER
 	
 - abrir outro terminal 
 	sh conectar.sh
 		escolher 3
 		
-	colar o token WORKER
-		ex.: docker swarm join --token SWMTKN-1-0xiuw5350mynbzsr1sctx13fntee3hefegccmxgjih2ppa8mhs-9jw7gt8xwjwy55xgj28vargmt 10.1.1.211:2377
-		
 	copiar ip
+		
+	colar o token WORKER		
 		
 - retornar ao terminal node 1 e executar
 	docker network create -d overlay broker-net
 	
 	git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git
 	
-	docker stack deploy -c ./broker-drone-cluster-monitor/docker stack deploy -c docker-compose-swarm-full.a.yml drone-stack
-	docker stack deploy -c docker-compose-swarm-full.a.yml drone-stack
+	docker stack deploy -c ./broker-drone-cluster-monitor/stack-swarm-services.yml drone-stack
 	
-	docker stack deploy -c ./broker-drone-cluster-monitor/docker stack deploy -c docker-compose-swarm-full.b.yml drone-stack
-	docker stack deploy -c docker-compose-swarm-full.b.yml drone-stack
+	docker service ls
+	
+	docker stack ps drone-stack
+	
+	docker stack deploy -c ./broker-drone-cluster-monitor/stack-swarm-clients.yml drone-stack
 	
 	docker service ls
 	
 	docker stack ps drone-stack
 	
 - Acessos:
-	NODE 1 IP: 18.207.236.38
-	NODE 2 IP: 18.234.168.36
-	NODE 3 IP: 52.23.177.183
-	
-	- Job:
-		- docker service logs drone_stack_drone-kafka-job
+	NODE 1 IP: 34.238.154.126
+	NODE 2 IP: 54.146.191.143
+	NODE 3 IP: 107.22.70.227
 		
-	- Producer:
-		- docker service logs drone_stack_drone-kafka-producer
+	- Swagger UI:
+		- http://107.22.70.227:8082/api/v1/drones-monitor/swagger-ui/
 		
-	- Consumer:
-		- docker service logs drone_stack_drone-kafka-consumer	
+		Drone20		
+		{
+			"id": 20,
+			"name": "Drone-20",
+			"latitude": 1.5,
+			"longitude": 1.5,
+			"temperature": "50",
+			"humidity": 0.80, 
+			"rastreability": true
+		}
 	
 	- Visualizer:
-		- http://18.234.168.36:8888
+		- http://34.238.154.126:8888
 	
 	- Kowl:
-		- http://34.204.61.218:8077
-	
-	- Kafka Manager:
-		- http://18.207.236.38:9000
+		- http://34.238.154.126:8077
 		
 	- Mongo Express:
-		- http://52.23.177.183:8081
+		- http://107.22.70.227:8081
 			- root
 			- MongoExpress2022!
 			
 	- Gmail:
 		- https://mail.google.com/mail/u/0
+		
+		
+		
+
 	
 - para finalização executar 
 	docker stack rm drone_stack
@@ -91,7 +102,24 @@ Roteiro Vídeo
 	
 	
 	
+
+
+
+
+
+
 	
+- Job:
+	- docker service logs drone_stack_drone-kafka-job
+	
+- Producer:
+	- docker service logs drone_stack_drone-kafka-producer
+	
+- Consumer:
+	- docker service logs drone_stack_drone-kafka-consumer	
+	
+- Kafka Manager:
+	- http://18.207.236.38:9000
 - Testar aplicação teste kafka
 - adequação o projeto 
 	- separar em arquivos de stacks
