@@ -151,14 +151,14 @@ Drone20
 	- Gmail:
 		- https://mail.google.com/mail/u/0
 		
-		
-		
-
+	- docker service logs  drone-stack_drone-kafka-job
 	
 - para finalização executar 
 	docker stack rm drone_stack
 	
-	docker volume rm drone_stack_zookeeper-data drone_stack_drone_zookeeper-txn-logs drone_stack_dronedb
+	docker volume prune (y)
+	
+	docker network prune (y)
 	
 	
 	
