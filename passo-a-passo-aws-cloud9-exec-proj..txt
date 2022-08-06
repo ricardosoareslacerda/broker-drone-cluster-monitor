@@ -72,7 +72,7 @@ DEPLOY E MONITORAMENTO
 		- http://34.238.154.126:8888
 	
 	- Kowl:
-		- http://34.238.154.126:8077
+		- http://34.238.154.126:8100
 		
 	- Swagger UI:
 		- http://107.22.70.227:8082/api/v1/drones-monitor/swagger-ui/
@@ -141,7 +141,7 @@ Drone20
 		- http://34.238.154.126:8888
 	
 	- Kowl:
-		- http://34.238.154.126:8077
+		- http://34.238.154.126:8100
 		
 	- Mongo Express:
 		- http://107.22.70.227:8081
