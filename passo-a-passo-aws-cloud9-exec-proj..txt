@@ -1,6 +1,8 @@
 Roteiro Vídeo
 - logar na conta AWS - Cloud9
-
+-------------------------------
+CRIAÇÃO MAQUINAS
+-------------------------------
 - IP Máquina Virtual - AWS
 	- 3.90.42.23
 
@@ -25,21 +27,28 @@ Roteiro Vídeo
 	sh conectar.sh
 		escolher 3
 		
-	copiar ip		
-	
+	copiar ip
+
+-------------------------------
+CONFIGURAÇÃO MAQUINAS NO SWARM
+-------------------------------	
 - terminal node 1 e executar
 	
 	docker swarm init
-		copia token worker
+		copia token WORKER
 		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-2few50kycnit6f5lh6gg21hpv 10.1.1.184:2377
 	
 	docker swarm join-token manager
-		copia token manager
+		copia token MANAGER
 		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-5o8bnp1icy5ko1be3ia5yl2e2 10.1.1.184:2377
-			
-	docker network create -d overlay broker-net
 	
 	git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git
+	
+	git pull origin master
+-------------------------------
+DEPLOY E MONITORAMENTO
+-------------------------------				
+	docker network create -d overlay broker-net
 	
 	docker stack deploy -c ./broker-drone-cluster-monitor/swarm/stack-swarm-services.yml drone-stack
 	
@@ -68,7 +77,7 @@ Roteiro Vídeo
 	- Swagger UI:
 		- http://107.22.70.227:8082/api/v1/drones-monitor/swagger-ui/
 		
-		Drone20		
+Drone20		
 {
 	"id": 20,
 	"name": "Drone-20",
@@ -103,7 +112,7 @@ Roteiro Vídeo
 	
 	docker stack ps drone-stack
 	
-	docker stack deploy -c ./broker-drone-cluster-monitor/swarm/stack-swarm-clients-jobs.yml drone-stack
+	docker stack deploy -c ./broker-drone-cluster-monitor/swarm/stack-swarm-clients-job.yml drone-stack
 	
 	docker service ls
 	
