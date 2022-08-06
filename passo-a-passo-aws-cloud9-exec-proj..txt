@@ -13,14 +13,6 @@ Roteiro Vídeo
 	sh conectar.sh
 		escolher 1
 		
-	docker swarm init
-		copia token worker
-		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-2few50kycnit6f5lh6gg21hpv 10.1.1.184:2377
-	
-	docker swarm join-token manager
-		copia token manager
-		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-5o8bnp1icy5ko1be3ia5yl2e2 10.1.1.184:2377
-		
 	copiar ip
 	
 - abrir outro terminal 
@@ -28,35 +20,96 @@ Roteiro Vídeo
 		escolher 2
 		
 	copiar ip
-		
-	colar o token MANAGER
-	
+
 - abrir outro terminal 
 	sh conectar.sh
 		escolher 3
 		
-	copiar ip
-		
-	colar o token WORKER		
-		
-- retornar ao terminal node 1 e executar
+	copiar ip		
+	
+- terminal node 1 e executar
+	
+	docker swarm init
+		copia token worker
+		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-2few50kycnit6f5lh6gg21hpv 10.1.1.184:2377
+	
+	docker swarm join-token manager
+		copia token manager
+		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-5o8bnp1icy5ko1be3ia5yl2e2 10.1.1.184:2377
+			
 	docker network create -d overlay broker-net
 	
 	git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git
 	
-	docker stack deploy -c ./broker-drone-cluster-monitor/stack-swarm-services.yml drone-stack
+	docker stack deploy -c ./broker-drone-cluster-monitor/swarm/stack-swarm-services.yml drone-stack
 	
 	docker service ls
 	
 	docker stack ps drone-stack
 	
-	docker stack deploy -c ./broker-drone-cluster-monitor/stack-swarm-clients.yml drone-stack
+	docker stack deploy -c ./broker-drone-cluster-monitor/swarm/stack-swarm-clients.yml drone-stack
 	
 	docker service ls
 	
 	docker stack ps drone-stack
 	
-- Acessos:
+
+- Verificar Acessos:
+	NODE 1 IP: 34.238.154.126
+	NODE 2 IP: 54.146.191.143
+	NODE 3 IP: 107.22.70.227
+	
+	- Visualizer:
+		- http://34.238.154.126:8888
+	
+	- Kowl:
+		- http://34.238.154.126:8077
+		
+	- Swagger UI:
+		- http://107.22.70.227:8082/api/v1/drones-monitor/swagger-ui/
+		
+		Drone20		
+{
+	"id": 20,
+	"name": "Drone-20",
+	"latitude": 1.5,
+	"longitude": 1.5,
+	"temperature": "50",
+	"humidity": 0.80, 
+	"rastreability": true
+}
+		
+	- Mongo Express:
+		- http://107.22.70.227:8081
+			- root
+			- MongoExpress2022!
+			
+	- Gmail:
+		- https://mail.google.com/mail/u/0
+		
+	
+- terminal node 3 e executar
+	docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-5o8bnp1icy5ko1be3ia5yl2e2 10.1.1.184:2377
+	
+	docker service ls
+	
+	docker stack ps drone-stack
+	
+
+- terminal node 2 e executar
+		docker swarm join --token SWMTKN-1-2qkh477dzvaivs9oilf14wqma4vemhgq9t8j0grpo1ok1sr6kw-5o8bnp1icy5ko1be3ia5yl2e2 10.1.1.184:2377
+	
+	docker service ls
+	
+	docker stack ps drone-stack
+	
+	docker stack deploy -c ./broker-drone-cluster-monitor/swarm/stack-swarm-clients-jobs.yml drone-stack
+	
+	docker service ls
+	
+	docker stack ps drone-stack
+	
+- - Verificar Acessos:
 	NODE 1 IP: 34.238.154.126
 	NODE 2 IP: 54.146.191.143
 	NODE 3 IP: 107.22.70.227
