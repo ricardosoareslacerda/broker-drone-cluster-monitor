@@ -77,11 +77,12 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 ## Vídeo-3 Apresentação da Aplicação em ambiente de Alta Disponibilidade (AWS/DOCKER SWARM - Passo a Passo):dash:
 
 > Link em vídeo-3 da aplicação rodando. https://www.loom.com/share/ff40bceee57842539dc14fb4f9822de9
-> Roteiro execução [git clone https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor.git]
+> Roteiro execução [https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor/blob/master/passo-a-passo-aws-cloud9-exec-proj..txt]
 
 ## Vídeo-4 Demonstração da Aplicação em ambiente de Alta Disponibilidade (AWS/DOCKER SWARM):dash:
 
 > Link em vídeo-4 da aplicação rodando. https://www.loom.com/share/edc26089fa384a639288b60a841d66de
+- Última Atualização
 
 ## Como rodar a aplicação :arrow_forward:
 
