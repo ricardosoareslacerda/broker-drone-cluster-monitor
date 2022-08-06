@@ -80,7 +80,9 @@ Este sistema compôem 3 modulos de um Projeto de Monitoramento de Drones:
 
 > Roteiro execução 
   > [https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor/blob/master/passo-a-passo-aws-cloud9-exec-proj..txt]
-> https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor/blob/master/requisitos/img.png
+  
+- Print execução drones 
+> [https://github.com/ricardosoareslacerda/broker-drone-cluster-monitor/blob/master/requisitos/img.png]
 
 ## Vídeo-4 Demonstração da Aplicação em ambiente de Alta Disponibilidade (AWS/DOCKER SWARM):dash:
 
