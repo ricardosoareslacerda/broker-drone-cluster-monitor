@@ -60,7 +60,7 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: MongoDB2022!
             MONGO_INITDB_DATABASE: dronedb
         volumes:
-            - "mongo-data:/data/db"
+            - mongo-data:/data/db
             - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/*.js
         container_name: mongo-dronedb
         ports:
@@ -140,6 +140,7 @@ networks:
     broker-net:
         name: broker-net
         external: true
+
 volumes:
     zookeeper-data:
     zookeeper-txn-logs:
