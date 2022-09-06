@@ -15,13 +15,6 @@ services:
         networks:
             - broker-net
         restart: always
-        deploy:
-            replicas: 2
-            placement:
-                constraints: [node.role == manager]
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
 
 # Networks to be created to facilitate communication between containers
 networks:

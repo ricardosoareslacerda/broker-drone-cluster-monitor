@@ -16,14 +16,6 @@ services:
         networks:
             - broker-net
         restart: always
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == manager]
-                #max_replicas_per_node: 1
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
 
     mongo-express:
         image: mongo-express
@@ -45,15 +37,7 @@ services:
             - broker-net
         restart: always
         depends_on:
-            - mongo-dronedb
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == worker]
-                #max_replicas_per_node: 1
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3  
+            - mongo-dronedb  
 
 # Networks to be created to facilitate communication between containers
 networks:

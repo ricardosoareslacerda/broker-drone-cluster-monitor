@@ -12,13 +12,6 @@ services:
             - kafka
         networks:
             - broker-net
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == manager]
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
     kowl:
         image: quay.io/cloudhut/kowl:master
         restart: unless-stopped
@@ -32,30 +25,6 @@ services:
             - broker-net
         depends_on:
             - kafka
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == manager]
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
-
-    visualizer:
-        image: dockersamples/visualizer:stable
-        hostname: visualizer
-        ports:
-            - "8888:8080"
-        volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-        networks:
-            - broker-net
-        deploy:
-            replicas: 1
-            placement:
-                constraints: [node.role == manager]
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
 
 # Networks to be created to facilitate communication between containers
 networks:
